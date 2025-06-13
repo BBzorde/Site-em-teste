@@ -33,6 +33,98 @@
             height: 100%;
             object-fit: cover; /* Garante que o vídeo preencha o espaço sem distorção */
         }
+
+        /* Estilos do Carrossel de Destaques */
+        .highlight-carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            /* Adicionado altura fixa para ajudar no layout, se necessário, ou usar min-height */
+            min-height: 400px; /* Altura mínima para o carrossel */
+            display: flex; /* Permite que os slides internos sejam posicionados */
+            align-items: center; /* Centraliza verticalmente o slide ativo */
+            justify-content: center; /* Centraliza horizontalmente o slide ativo */
+        }
+
+        .carousel-slide {
+            display: none; /* Esconde todos os slides por padrão */
+            position: absolute; /* Posiciona os slides de forma absoluta para ficarem um sobre o outro */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.7s ease-in-out; /* Alterado o tempo da animação de fade para 0.7 segundos */
+            /* Garante que o conteúdo interno use flexbox para layout em colunas/linhas */
+            flex-direction: column; /* Padrão para mobile */
+            justify-content: center; /* Centraliza conteúdo verticalmente */
+            align-items: center; /* Centraliza conteúdo horizontalmente */
+        }
+
+        .carousel-slide.active {
+            display: flex; /* Mostra apenas o slide ativo como flexbox */
+        }
+
+        /* Aplica o layout md:flex quando o slide está ativo E em telas médias */
+        @media (min-width: 768px) {
+            .carousel-slide.active {
+                flex-direction: row; /* Volta para layout em linha para desktop */
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; } /* Alterado de 0.5 para 0 para um fade-in completo */
+            to { opacity: 1; }
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-button.prev {
+            left: 1rem;
+        }
+
+        .carousel-button.next {
+            right: 1rem;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background-color: white;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -62,40 +154,64 @@
 
     <!-- Seção Principal de Conteúdo -->
     <main class="container mx-auto px-4 py-8">
-        <!-- Notícia em Destaque (Hero Section) - Agora com foco na Análise de REMATCH -->
-        <section class="mb-12 bg-gray-800 rounded-lg shadow-xl overflow-hidden md:flex">
-            <div class="md:w-1/2">
-                <!-- Wrapper para manter o aspecto do vídeo responsivo (16:9) -->
-                <div class="video-wrapper rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none">
-                    <!-- Tag <video> para incorporar o trailer do jogo -->
-                    <video
-                        src="https://video.fastly.steamstatic.com/store_trailers/257123547/movie480_vp9.webm?t=1744303216"
-                        autoplay
-                        loop
-                        muted
-                        playsinline
-                        controls
-                        poster="https://placehold.co/800x450/4a5568/edf2f7?text=TRAILER+EM+DESTAQUE"
-                        title="Trailer em Destaque"
-                    >
-                        Seu navegador não suporta a tag de vídeo.
-                    </video>
+        <!-- Carrossel de Destaques -->
+        <div class="highlight-carousel-container mb-12 bg-gray-800">
+            <!-- Destaque 1 (Análise de REMATCH) -->
+            <section class="carousel-slide bg-gray-800 rounded-lg overflow-hidden">
+                <div class="md:w-1/2">
+                    <div class="video-wrapper rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none">
+                        <video
+                            src="https://video.fastly.steamstatic.com/store_trailers/257123547/movie480_vp9.webm?t=1744303216"
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            controls
+                            poster="https://placehold.co/800x450/4a5568/edf2f7?text=TRAILER+EM+DESTAQUE"
+                            title="Trailer em Destaque"
+                        >
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
                 </div>
-            </div>
-            <div class="md:w-1/2 p-6 flex flex-col justify-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">
-                    <!-- Título e link AGORA atualizados para a página de análise de REMATCH -->
-                    <a href="analise1.html" class="hover:text-blue-400 transition duration-300">Análise de jogo: REMATCH – Minhas Primeiras Impressões!</a>
-                </h2>
-                <p class="text-gray-400 text-lg mb-6">
-                    Mergulhe em nossa análise completa do novo jogo de esporte tático que está revolucionando a Steam!
-                </p>
-                <!-- Botão AGORA direcionando para a página de análise de REMATCH -->
-                <a href="analise1.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 self-start">
-                    Leia a Análise Completa &rarr;
-                </a>
-            </div>
-        </section>
+                <div class="md:w-1/2 p-6 flex flex-col justify-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">
+                        <a href="analise1.html" class="hover:text-blue-400 transition duration-300">Análise de jogo: REMATCH – Minhas Primeiras Impressões!</a>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        Mergulhe em nossa análise completa do novo jogo de esporte tático que está revolucionando a Steam!
+                    </p>
+                    <a href="analise1.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 self-start">
+                        Leia a Análise Completa &rarr;
+                    </a>
+                </div>
+            </section>
+
+            <!-- Destaque 2 (The Alters - Notícia 2) -->
+            <section class="carousel-slide bg-gray-800 rounded-lg overflow-hidden">
+                <div class="md:w-1/2">
+                    <img src="https://i.ibb.co/xSL0VgB6/the-alters-1nzq5.jpg" alt="Imagem do jogo The Alters" class="w-full h-full object-cover rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none">
+                </div>
+                <div class="md:w-1/2 p-6 flex flex-col justify-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">
+                        <a href="noticias2.html" class="hover:text-blue-400 transition duration-300">The Alters: O Trailer de Sobrevivência e Múltiplas Realidades Chega Hoje!</a>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        Prepare-se para uma experiência única com o novo trailer de sobrevivência da 11 bit studios.
+                    </p>
+                    <a href="noticias2.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 self-start">
+                        Leia a Notícia Completa &rarr;
+                    </a>
+                </div>
+            </section>
+
+            <!-- Botões de Navegação do Carrossel -->
+            <button class="carousel-button prev" aria-label="Anterior">&#10094;</button>
+            <button class="carousel-button next" aria-label="Próximo">&#10095;</button>
+
+            <!-- Indicadores de Carrossel (Pontos) -->
+            <div class="carousel-indicators"></div>
+        </div>
 
         <!-- Seção de Notícias Recentes -->
         <section>
@@ -103,11 +219,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Card de Notícia 1 - Promoção KRAFTON -->
                 <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <!-- Imagem de placeholder para a notícia 1, temática de promoção de jogos -->
                     <img src="https://placehold.co/600x338/d97706/fff?text=KRAFTON+Sale" alt="Promoção Krafton na Steam" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h4 class="text-xl font-semibold mb-3 text-white">
-                            <!-- Link da Notícia 1 atualizado para a promoção da Steam -->
                             <a href="https://store.steampowered.com/sale/kraftonpublishersale2025?snr=1_4_4__118" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition duration-300">Promoção KRAFTON na Steam: Grandes Descontos em PUBG, Subnautica e Mais!</a>
                         </h4>
                         <p class="text-gray-400 text-base mb-4">
@@ -119,24 +233,20 @@
 
                 <!-- Card de Notícia 2 - The Alters: com imagem e link para a PÁGINA DEDICADA -->
                 <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <!-- Imagem de The Alters -->
                     <img src="https://i.ibb.co/xSL0VgB6/the-alters-1nzq5.jpg" alt="Imagem do jogo The Alters" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h4 class="text-xl font-semibold mb-3 text-white">
-                            <!-- Título corrigido para "Trailer" -->
                             <a href="noticias2.html" class="hover:text-blue-400 transition duration-300">The Alters: O Trailer de Sobrevivência e Múltiplas Realidades Chega Hoje!</a>
                         </h4>
                         <p class="text-gray-400 text-base mb-4">
                             Mergulhe em uma jornada existencial onde Jan Dolski deve criar "alteres" de si mesmo para sobreviver em um planeta hostil. Suas escolhas moldam realidades!
                         </p>
-                        <!-- Link AGORA DIRECIONA PARA noticias2.html -->
                         <a href="noticias2.html" class="text-blue-400 hover:underline font-medium">Leia Mais &rarr;</a>
                     </div>
                 </article>
 
                 <!-- Card de Notícia 3 - AGORA LINKA PARA ANALISE1.HTML E COM A IMAGEM CORRETA -->
                 <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <!-- Imagem real do REMATCH -->
                     <img src="https://i.ibb.co/V0QTGjfg/header.jpg" alt="Capa de REMATCH" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h4 class="text-xl font-semibold mb-3 text-white">
@@ -154,12 +264,12 @@
                     <img src="https://placehold.co/600x338/3B82F6/fff?text=Console+Update" alt="Atualização de Console" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h4 class="text-xl font-semibold mb-3 text-white">
-                            <a href="https://f5games.com.br/noticia/nova-atualizacao-consoles" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition duration-300">Nova Atualização de Firmware para Consoles Promete Melhorias</a>
+                            <a href="https://store.steampowered.com/sale/kraftonpublishersale2025?snr=1_4_4__118" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition duration-300">Nova Atualização de Firmware para Consoles Promete Melhorias</a>
                         </h4>
                         <p class="text-gray-400 text-base mb-4">
                             Fique por dentro das novidades que chegam ao seu console, incluindo otimizações de performance e novas funcionalidades.
                         </p>
-                        <a href="https://f5games.com.br/noticia/nova-atualizacao-consoles" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-medium">Leia Mais &rarr;</a>
+                        <a href="https://store.steampowered.com/sale/kraftonpublishersale2025?snr=1_4_4__118" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-medium">Leia Mais &rarr;</a>
                     </div>
                 </article>
 
@@ -205,5 +315,84 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const nextButton = document.querySelector('.carousel-button.next');
+            const indicatorsContainer = document.querySelector('.carousel-indicators');
+            let currentSlide = 0;
+            let slideInterval;
+
+            // Cria os indicadores (pontos)
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('indicator-dot');
+                if (index === 0) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => showSlide(index));
+                indicatorsContainer.appendChild(dot);
+            });
+
+            const indicatorDots = document.querySelectorAll('.indicator-dot');
+
+            // Função para mostrar o slide
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (indicatorDots[i]) { // Garante que o indicador exista antes de tentar manipular
+                        indicatorDots[i].classList.remove('active');
+                    }
+                });
+                slides[index].classList.add('active');
+                if (indicatorDots[index]) { // Garante que o indicador exista antes de tentar manipular
+                    indicatorDots[index].classList.add('active');
+                }
+                currentSlide = index;
+            }
+
+            // Função para ir para o próximo slide
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Função para ir para o slide anterior
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Inicia a rolagem automática
+            function startSlideShow() {
+                // Alterado o tempo de transição automática para 15 segundos (15000 ms)
+                slideInterval = setInterval(nextSlide, 15000);
+            }
+
+            // Para a rolagem automática (ao interagir com os botões)
+            function stopSlideShow() {
+                clearInterval(slideInterval);
+            }
+
+            // Event Listeners para os botões de navegação
+            nextButton.addEventListener('click', () => {
+                stopSlideShow();
+                nextSlide();
+                startSlideShow(); // Reinicia o timer após interação manual
+            });
+
+            prevButton.addEventListener('click', () => {
+                stopSlideShow();
+                prevSlide();
+                startSlideShow(); // Reinicia o timer após interação manual
+            });
+
+            // Inicia o carrossel na carga da página
+            showSlide(currentSlide);
+            startSlideShow();
+        });
+    </script>
 </body>
 </html>
