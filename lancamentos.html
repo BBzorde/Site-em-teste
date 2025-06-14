@@ -17,16 +17,186 @@
         .container {
             max-width: 1200px;
         }
+        .game-entry {
+            display: flex; /* Mantém flex para alinhamento */
+            flex-direction: column; /* Coloca itens em coluna para melhor espaçamento vertical */
+            align-items: flex-start; /* Alinha o texto à esquerda */
+            margin-bottom: 0.5rem; /* Espaçamento entre as entradas */
+            background-color: #2d3748; /* bg-gray-700 */
+            padding: 0.5rem 1rem; /* Reduzido o padding vertical e horizontal */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .game-entry:last-child {
+            margin-bottom: 0;
+        }
+        .game-info {
+            width: 100%; /* Garante que as informações ocupem a largura total */
+        }
+        /* Ajuste para que a tag <p> dentro de .game-info tenha o estilo de título */
+        .game-info p {
+            font-size: 1rem; /* Tamanho da fonte reduzido para 1rem (16px) */
+            font-weight: 600; /* Peso da fonte */
+            color: #fff; /* Cor do texto branca */
+            margin-bottom: 0; /* Remove margin-bottom, já que é uma única linha */
+        }
+        /* Estilo para o texto dos consoles em vermelho */
+        .platform-text {
+            color: #ef4444; /* Cor vermelha do Tailwind CSS (red-500) */
+        }
+
+        /* Oculta o menu de navegação por mês que não será mais usado */
+        .month-navigation {
+            display: none;
+        }
+
+        /* Estilos do calendário flutuante */
+        .calendar-dropdown {
+            position: absolute;
+            top: 60px; /* Ajuste para descer abaixo do cabeçalho */
+            left: 20px; /* Alinhado à esquerda */
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra mais forte para destacar */
+            z-index: 1000; /* Garante que o calendário fique acima de outros elementos */
+            text-align: center;
+            max-width: 320px;
+            display: none; /* Inicia oculto */
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-header button {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            width: 30px; /* Largura fixa para as setas */
+            height: 30px; /* Altura fixa para as setas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calendar-header button:hover {
+            background-color: #63b3ed;
+            color: #1a202c;
+        }
+        /* Novo estilo para o grid dos cabeçalhos dos dias da semana */
+        .calendar-days-header-grid,
+        .calendar-grid { /* Aplica o mesmo grid para os dias */
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+        }
+        .calendar-day-header {
+            color: #cbd5e0;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.25rem;
+        }
+        .calendar-day {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 0.9rem;
+        }
+        .calendar-day:hover {
+            background-color: #4a5568;
+        }
+        .calendar-day.current-month {
+            opacity: 1;
+        }
+        .calendar-day.other-month {
+            opacity: 0.5;
+        }
+        .calendar-day.selected {
+            background-color: #63b3ed;
+            color: #1a202c;
+            font-weight: bold;
+        }
+        .calendar-day.today {
+            border: 2px solid #63b3ed;
+        }
+        .empty-day {
+            background-color: transparent;
+            cursor: default;
+        }
+
+        /* Estilo para o botão de calendário no cabeçalho, agora alinhado à esquerda */
+        .calendar-toggle-btn {
+            background-color: #63b3ed; /* blue-400 */
+            color: #1a202c; /* text-gray-900 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .calendar-toggle-btn:hover {
+            background-color: #4299e1; /* blue-500 */
+        }
+
+        /* Flexbox para alinhar logo e botão de calendário no cabeçalho */
+        .header-left-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem; /* Espaçamento entre o logo e o botão */
+        }
+
+        /* Estilos responsivos para o cabeçalho */
+        @media (max-width: 768px) {
+            .header-left-section {
+                width: 100%;
+                justify-content: center; /* Centraliza logo e botão em telas menores */
+                margin-bottom: 1rem; /* Espaçamento abaixo */
+            }
+            .calendar-dropdown {
+                left: 50%; /* Centraliza o dropdown em telas menores */
+                transform: translateX(-50%);
+                top: 120px; /* Ajuste para descer abaixo do cabeçalho expandido */
+            }
+        }
+        .clear-filter-btn {
+            background-color: #ef4444; /* Vermelho para destaque */
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 1rem; /* Espaçamento do grid */
+            width: 100%; /* Largura total */
+        }
+        .clear-filter-btn:hover {
+            background-color: #dc2626; /* Tom mais escuro ao passar o mouse */
+        }
     </style>
 </head>
 <body class="antialiased">
     <!-- Cabeçalho do Site -->
-    <header class="bg-gray-900 py-4 shadow-lg">
+    <header class="bg-gray-900 py-4 shadow-lg relative">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
-            <!-- Logo/Nome do Site -->
-            <a href="index.html" class="mb-4 md:mb-0">
-                <img src="https://i.ibb.co/Q7QTMNrt/key-f5-symbol-black-computer-260nw-1968799435.webp" alt="Logo F5 Games" class="h-12 w-auto rounded-md">
-            </a>
+            <!-- Seção esquerda do cabeçalho: Logo e Botão do Calendário -->
+            <div class="header-left-section">
+                <a href="index.html" class="mb-0">
+                    <img src="https://i.ibb.co/Q7QTMNrt/key-f5-symbol-black-computer-260nw-1968799435.webp" alt="Logo F5 Games" class="h-12 w-auto rounded-md">
+                </a>
+                <button id="calendarToggleBtn" class="calendar-toggle-btn">
+                    <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span id="currentDateBtnText"></span> <!-- Texto da data atual -->
+                </button>
+            </div>
+            
             <!-- Menu de Navegação -->
             <nav>
                 <ul class="flex flex-wrap justify-center space-x-6">
@@ -34,62 +204,51 @@
                     <li><a href="noticias.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Notícias</a></li>
                     <li><a href="analises.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Análises</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">E-Sports</a></li>
-                    <!-- Destaque para a página de Contato (manter o destaque em Contato por enquanto) -->
                     <li><a href="contato.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Contato</a></li>
                 </ul>
             </nav>
         </div>
+        <!-- Calendário Interativo (posicionado dentro do cabeçalho, mas flutuante) -->
+        <div id="calendarDropdown" class="calendar-dropdown">
+            <div class="calendar-header">
+                <button id="prevMonth" class="text-lg">&lt;</button> <!-- Seta para mês anterior -->
+                <h3 id="currentMonthYear" class="text-xl font-semibold text-white"></h3>
+                <button id="nextMonth" class="text-lg">&gt;</button> <!-- Seta para próximo mês -->
+            </div>
+            <!-- Nova div para os cabeçalhos dos dias da semana -->
+            <div class="calendar-days-header-grid">
+                <div class="calendar-day-header">Dom</div>
+                <div class="calendar-day-header">Seg</div>
+                <div class="calendar-day-header">Ter</div>
+                <div class="calendar-day-header">Qua</div>
+                <div class="calendar-day-header">Qui</div>
+                <div class="calendar-day-header">Sex</div>
+                <div class="calendar-day-header">Sáb</div>
+            </div>
+            <div id="calendarDays" class="calendar-grid">
+                <!-- Dias do calendário serão inseridos aqui pelo JS -->
+            </div>
+            <button id="clearFilterBtn" class="clear-filter-btn">Limpar Filtro</button>
+        </div>
     </header>
 
-    <!-- Conteúdo da Página de Próximos Lançamentos -->
+    <!-- Conteúdo Principal da Página de Lançamentos -->
     <main class="container mx-auto px-4 py-12 min-h-screen">
         <section>
             <h1 class="text-4xl font-bold text-white mb-8 text-center">Próximos Lançamentos - Fique de Olho!</h1>
             <p class="text-gray-300 text-lg mb-10 text-center">
                 Prepare-se para os jogos que estão por vir! Aqui você encontra os títulos mais aguardados com suas datas de lançamento e novidades.
+                (As informações abaixo são baseadas em dados públicos de agendas de lançamento e são representativas.)
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Exemplo de Card de Lançamento 1 -->
-                <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <img src="https://placehold.co/600x338/5A8DED/fff?text=LANÇAMENTO+1" alt="Capa do Jogo Próximo Lançamento 1" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h4 class="text-xl font-semibold mb-3 text-white">
-                            <a href="#" class="hover:text-blue-400 transition duration-300">[Nome do Jogo 1]: Aventura Confirmada para [Data de Lançamento]!</a>
-                        </h4>
-                        <p class="text-gray-400 text-base mb-4">
-                            Prepare-se para mergulhar neste universo épico. Detalhes da jogabilidade e enredo revelados!
-                        </p>
-                        <a href="#" class="text-blue-400 hover:underline font-medium">Saiba Mais &rarr;</a>
-                    </div>
-                </article>
 
-                <!-- Exemplo de Card de Lançamento 2 -->
-                <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <img src="https://placehold.co/600x338/B36FFD/fff?text=EM+BREVE" alt="Capa do Jogo Próximo Lançamento 2" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h4 class="text-xl font-semibold mb-3 text-white">
-                            <a href="#" class="hover:text-blue-400 transition duration-300">[Nome do Jogo 2]: Trailer de Gameplay Surpreende Fãs!</a>
-                        </h4>
-                        <p class="text-gray-400 text-base mb-4">
-                            O novo trailer mostra gráficos impressionantes e mecânicas inovadoras. Lançamento previsto para o 3º trimestre.
-                        </p>
-                        <a href="#" class="text-blue-400 hover:underline font-medium">Assista ao Trailer &rarr;</a>
-                    </div>
-                </article>
-
-                <!-- Exemplo de Card de Lançamento 3 -->
-                <article class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
-                    <img src="https://placehold.co/600x338/6FDD86/fff?text=PRÉ-VENDA" alt="Capa do Jogo Próximo Lançamento 3" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h4 class="text-xl font-semibold mb-3 text-white">
-                            <a href="#" class="hover:text-blue-400 transition duration-300">[Nome do Jogo 3]: Pré-Venda Aberta com Bônus Exclusivos!</a>
-                        </h4>
-                        <p class="text-gray-400 text-base mb-4">
-                            Garanta sua cópia e receba itens especiais ao fazer a pré-compra deste aguardado RPG.
-                        </p>
-                        <a href="#" class="text-blue-400 hover:underline font-medium">Pré-Venda Já! &rarr;</a>
-                    </div>
-                </article>
+            <div class="bg-gray-800 rounded-lg shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+                <div id="gameList">
+                    <!-- Jogos serão inseridos aqui pelo JS -->
+                </div>
+                
+                <p class="text-gray-400 text-sm mt-12 text-center">
+                    *Nota: As informações acima são baseadas em dados públicos de agendas de lançamento e são representativas. Datas e detalhes estão sujeitos a alterações. Em uma aplicação real, estes dados seriam alimentados por uma API ou processo de backend dedicado.
+                </p>
             </div>
         </section>
     </main>
@@ -105,5 +264,587 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Dados dos jogos (em um formato que permite fácil manipulação por data)
+        const allGames = [
+            // Janeiro de 2025
+            { name: "A Lenda do Cyber Cowboy", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-01-01" },
+            { name: "Aprenda a Jogar Vol. 10 - Gravity Space Walk", platforms: "(PS4, PS5)", date: "2025-01-03" },
+            { name: "Sea Fantasy", platforms: "(Xbox Series X|S, Xbox One, PC)", date: "2025-01-07" },
+            { name: "Ys Memoire: The Oath in Felghana", platforms: "(PS5, PS4, Switch)", date: "2025-01-07" },
+            { name: "Bosque de Rivenaar", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch)", date: "2025-01-08" },
+            { name: "Freedom Wars Remastered", platforms: "(PS5, PS4, Switch, PC)", date: "2025-01-09" },
+            { name: "Asfalia Fear", platforms: "(PC)", date: "2025-01-14" },
+            { name: "Heroes of Hammerwatch 2", platforms: "(PC)", date: "2025-01-14" },
+            { name: "Hyper Light Breaker", platforms: "(PC)", date: "2025-01-14" },
+            { name: "Recital Tríplice", platforms: "(PC)", date: "2025-01-14" },
+            { name: "Aloft", platforms: "(PC)", date: "2025-01-15" },
+            { name: "Runny Bunny", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch)", date: "2025-01-15" },
+            { name: "The Roottrees estão mortos", platforms: "(PC)", date: "2025-01-15" },
+            { name: "Donkey Kong Country Returns HD", platforms: "(Switch)", date: "2025-01-16" },
+            { name: "Montezuma's Revenge - Edição de 40º Aniversário", platforms: "(PC)", date: "2025-01-16" },
+            { name: "Things Too Ugly", platforms: "(Switch, PlayStation, Xbox, PC)", date: "2025-01-16" },
+            { name: "Dynasty Warriors Origins", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-01-17" },
+            { name: "Tales of Graces f Remastered", platforms: "(Switch)", date: "2025-01-17" },
+            { name: "IDUN", platforms: "(PC)", date: "2025-01-20" },
+            { name: "Into the Emberlands", platforms: "(PC)", date: "2025-01-20" },
+            { name: "Magic Inn", platforms: "(PC)", date: "2025-01-20" },
+            { name: "Super Roboy", platforms: "(PC)", date: "2025-01-20" },
+            { name: "Lonely Mountains: Snow Riders", platforms: "(Xbox Series X|S, PC)", date: "2025-01-20" },
+            { name: "Somber Echoes", platforms: "(PC)", date: "2025-01-21" },
+            { name: "Ender Magnolia: Bloom in the Mist", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-01-22" },
+            { name: "Popotinho's Adventures", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch)", date: "2025-01-22" },
+            { name: "Dreamcore", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-01-23" },
+            { name: "Final Fantasy VII Rebirth", platforms: "(PC)", date: "2025-01-23" },
+            { name: "Gravitators", platforms: "(Switch)", date: "2025-01-23" },
+            { name: "Rocket Boots Mania", platforms: "(PC)", date: "2025-01-23" },
+            { name: "Star Wars Episode 1: Jedi Power Battles", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-01-23" },
+            { name: "Synduality Echo of Ada", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-01-23" },
+            { name: "Cat Detective Albert Wilde", platforms: "(PC)", date: "2025-01-24" },
+            { name: "Mark of the Deep", platforms: "(PC)", date: "2025-01-24" },
+            { name: "Cuisineer", platforms: "(Switch)", date: "2025-01-28" },
+            { name: "Neptunia Riders Vs Dogoos", platforms: "(PS5, PS4, Nintendo Switch)", date: "2025-01-28" },
+            { name: "Orcs Must Die! Deathtrap", platforms: "(Xbox Series X|S, PC)", date: "2025-01-28" },
+            { name: "Sibel's Journey", platforms: "(PC)", date: "2025-01-28" },
+            { name: "Tails of Iron 2: Whiskers of Winter", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-01-28" },
+            { name: "The Stone of Madness", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-01-28" },
+            { name: "Warside", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-01-28" },
+            { name: "Agent Fall", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch)", date: "2025-01-29" },
+            { name: "Coridden", platforms: "(PC)", date: "2025-01-29" },
+            { name: "Cryptical Path", platforms: "(PC)", date: "2025-01-29" },
+            { name: "DeTechtive 2112", platforms: "(PC)", date: "2025-01-29" },
+            { name: "Dead Letter Dept.", platforms: "(PC)", date: "2025-01-30" },
+            { name: "Defender's Quest 2", platforms: "(PC)", date: "2025-01-30" },
+            { name: "Sniper Elite: Resistance", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-01-30" },
+            { name: "Spider-Man 2", platforms: "(PC)", date: "2025-01-30" },
+            { name: "Genso Manege", platforms: "(Switch, PC)", date: "2025-01-31" },
+            // Fevereiro de 2025
+            { name: "Kingdom Come: Deliverance 2", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-02-04" },
+            { name: "DeathOmen", platforms: "(PC)", date: "2025-02-05" },
+            { name: "Rift of the NecroDancer", platforms: "(PC)", date: "2025-02-05" },
+            { name: "Starlight Legacy", platforms: "(PC)", date: "2025-02-05" },
+            { name: "Enquanto Espera", platforms: "(PC, Switch)", date: "2025-02-05" },
+            { name: "Ambulance Life: A Paramedic Simulator", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-02-06" },
+            { name: "Big Helmet Heroes", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-02-06" },
+            { name: "Continue Dirigindo", platforms: "(PC)", date: "2025-02-06" },
+            { name: "Moons of Darsalon", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch)", date: "2025-02-06" },
+            { name: "Sid Meier's Civilization VII", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-02-11" },
+            { name: "O Executivo", platforms: "(PC)", date: "2025-02-11" },
+            { name: "Super Jagger Bomb 2: Go East", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-02-12" },
+            { name: "Warriors: Abyss", platforms: "(PS5, PS4, Xbox Series X|S, Switch, PC)", date: "2025-02-12" },
+            { name: "Dawnfolk", platforms: "(PC)", date: "2025-02-13" },
+            { name: "Phantom Breaker: Battle Grounds Ultimate", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-02-13" },
+            { name: "Rugby 25", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-02-13" },
+            { name: "Outros jogos de Terry", platforms: "(PC)", date: "2025-02-13" },
+            { name: "Afterlove EP", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-02-14" },
+            { name: "The Legend of Heroes: Trails Through Daybreak II", platforms: "(PS5, PS4, Switch, PC)", date: "2025-02-14" },
+            { name: "Immortal Hunters", platforms: "(PC)", date: "2025-02-17" },
+            { name: "Abadia de Ale", platforms: "(PC)", date: "2025-02-18" },
+            { name: "Avowed", platforms: "(Xbox Series X|S, PC)", date: "2025-02-18" },
+            { name: "Lost Records: Bloom & Rage Tape 1", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-02-18" },
+            { name: "HPL: Nyarlathotep Rising", platforms: "(PC)", date: "2025-02-19" },
+            { name: "BrokenLore: Low", platforms: "(PC)", date: "2025-02-20" },
+            { name: "Tribe Nine", platforms: "(PC, iOS, Android)", date: "2025-02-20" },
+            { name: "Morra na Masmorra", platforms: "(PC)", date: "2025-02-21" },
+            { name: "Ninja Five-0", platforms: "(PS5, PS4, Switch, PC)", date: "2025-02-25" },
+            { name: "Monster Hunter Wilds", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-02-28" },
+            { name: "Omega 6: The Triangle Stars", platforms: "(Switch, PC)", date: "2025-02-28" },
+            // Março de 2025
+            { name: "Grimoire Groves", platforms: "(PC)", date: "2025-03-04" },
+            { name: "Two Point Museum", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-04" },
+            { name: "War Robots: Frontiers", platforms: "(PS5, PS4, Xbox Series X|S, PC)", date: "2025-03-04" },
+            { name: "Wizordum", platforms: "(PC)", date: "2025-03-05" },
+            { name: "Eldrador Creatures: Shadowfall", platforms: "(PS5, PS4, Xbox Series X|S, Switch, PC)", date: "2025-03-06" },
+            { name: "Fragpunk", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-06" },
+            { name: "Split Fiction", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-06" },
+            { name: "Suikoden 1&II HD Remaster Gate Rune e Dunan Unification Wars", platforms: "(PS4, Xbox One, Switch, PC)", date: "2025-03-06" },
+            { name: "Sugardew Island - Sua Aconchegante Loja de Fazenda", platforms: "(PS5, PS4, Switch, PC)", date: "2025-03-07" },
+            { name: "Acesso antecipado ao WWE 2K25", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-03-07" },
+            { name: "Beyond the Ice Palace 2", platforms: "(PC, consoles um dia depois)", date: "2025-03-10" },
+            { name: "Centium", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-03-11" },
+            { name: "Wanderstop", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-11" },
+            { name: "Expulso!", platforms: "(Switch, iOS, Android)", date: "2025-03-12" },
+            { name: "Fate: Reawakened", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-03-12" },
+            { name: "Path of Fury: Episódio 1", platforms: "(Missão)", date: "2025-03-13" },
+            { name: "Out of the Park Baseball 26", platforms: "(PC)", date: "2025-03-14" },
+            { name: "WWE 2K25", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-03-14" },
+            { name: "33 Immortals", platforms: "(Xbox Series X|S, PC)", date: "2025-03-18" },
+            { name: "MLB The Show 25", platforms: "(PS5, Xbox Series X|S, Switch)", date: "2025-03-18" },
+            { name: "Reignbreaker", platforms: "(PC)", date: "2025-03-18" },
+            { name: "Virballs", platforms: "(PC)", date: "2025-03-18" },
+            { name: "Assassin's Creed Shadows", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-20" },
+            { name: "Mudborne", platforms: "(PC)", date: "2025-03-20" },
+            { name: "Atelier Yumia: O Alquimista das Memórias e a Terra Imaginada", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-03-21" },
+            { name: "Dark Deity 2", platforms: "(PC)", date: "2025-03-24" },
+            { name: "Folklands", platforms: "(PC)", date: "2025-03-24" },
+            { name: "Breakout Beyond", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-03-25" },
+            { name: "Mother Machine", platforms: "(PC)", date: "2025-03-26" },
+            { name: "Grit and Valor - 1949", platforms: "(PC)", date: "2025-03-26" },
+            { name: "Twilight Monk", platforms: "(Switch, PC)", date: "2025-03-26" },
+            { name: "Quartas-feiras", platforms: "(PC)", date: "2025-03-26" },
+            { name: "Limite de IA", platforms: "(PS5, PC)", date: "2025-03-27" },
+            { name: "Atomfall", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-03-27" },
+            { name: "Bubble Ghost Remake", platforms: "(Switch, PC)", date: "2025-03-27" },
+            { name: "ENA: Dream BBQ Capítulo 1", platforms: "(PC)", date: "2025-03-27" },
+            { name: "SaGa Frontier 2 Remastered", platforms: "(PS5, PS4, Switch, PC, iOS, Android)", date: "2025-03-27" },
+            { name: "Esportes: Renovações", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-27" },
+            { name: "The First Berserker: Khazan", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-27" },
+            { name: "Dollhouse: Behind the Broken Mirror", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-03-28" },
+            { name: "Wildkeepers Rising", platforms: "(PC)", date: "2025-03-31" },
+            // Abril de 2025
+            { name: "Nif Nif", platforms: "(Switch, PC)", date: "2025-04-01" },
+            { name: "Crocs: A Lenda dos Gobbos", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-04-02" },
+            { name: "Elroy e os Alienígenas", platforms: "(PC)", date: "2025-04-02" },
+            { name: "Steel Hunters", platforms: "(PC)", date: "2025-04-02" },
+            { name: "Detetive Dotson", platforms: "(PC)", date: "2025-04-03" },
+            { name: "Jin & Jan", platforms: "(PC)", date: "2025-04-03" },
+            { name: "Praia de Ekoh", platforms: "(PC)", date: "2025-04-04" },
+            { name: "Peppered", platforms: "(PC)", date: "2025-04-04" },
+            { name: "Vindefiant", platforms: "(PC)", date: "2025-04-04" },
+            { name: "Cursed Dawn", platforms: "(PC)", date: "2025-04-07" },
+            { name: "Dissidência em Marte", platforms: "(PC)", date: "2025-04-07" },
+            { name: "Brigada Blindada 2", platforms: "(PC)", date: "2025-04-08" },
+            { name: "Fardo de Comando", platforms: "(PC)", date: "2025-04-08" },
+            { name: "Locomoto", platforms: "(PC)", date: "2025-04-08" },
+            { name: "South of Midnight", platforms: "(Xbox Series X|S, PC)", date: "2025-04-08" },
+            { name: "Commandos: Origins", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-04-09" },
+            { name: "Driveloop", platforms: "(PC)", date: "2025-04-09" },
+            { name: "Blue Prince", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-10" },
+            { name: "Crashlands 2", platforms: "(PC, iOS, Android)", date: "2025-04-10" },
+            { name: "Monaco 2", platforms: "(PC)", date: "2025-04-10" },
+            { name: "Monster Energy Supercross 25 - O videogame oficial", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-10" },
+            { name: "Perplex", platforms: "(PC)", date: "2025-04-10" },
+            { name: "Promise Mascot Agency", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-04-10" },
+            { name: "Star Overdrive", platforms: "(Switch, PC)", date: "2025-04-10" },
+            { name: "Steel Seed", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-10" },
+            { name: "Willow Guard", platforms: "(PC)", date: "2025-04-10" },
+            { name: "Refrão do Viajante", platforms: "(PC)", date: "2025-04-11" },
+            { name: "Fubuki - foco em Holoearth -", platforms: "(PC)", date: "2025-04-14" },
+            { name: "O Aprendiz do Louco", platforms: "(PC)", date: "2025-04-14" },
+            { name: "Lost Records: Bloom & Rage Tape 2", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-15" },
+            { name: "O Incidente Eletrizante: Uma Mini-Expedição Monstruosa", platforms: "(PC)", date: "2025-04-15" },
+            { name: "Synergy", platforms: "(PC)", date: "2025-04-16" },
+            { name: "Bionic Bay", platforms: "(PS5, PC)", date: "2025-04-17" },
+            { name: "Chasmal Fear", platforms: "(PC)", date: "2025-04-17" },
+            { name: "Gorn 2", platforms: "(PC VR, Quest)", date: "2025-04-17" },
+            { name: "Indiana Jones e o Grande Círculo", platforms: "(PS5)", date: "2025-04-17" },
+            { name: "Mandragora", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-04-17" },
+            { name: "Rusty Rabbit", platforms: "(PS5, Switch, PC)", date: "2025-04-17" },
+            { name: "Coleção Lunar Remastered", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-04-18" },
+            { name: "Mirage: Ignis Fatuus", platforms: "(Switch, PC)", date: "2025-04-18" },
+            { name: "Tranquil Isle", platforms: "(PC)", date: "2025-04-18" },
+            { name: "Fatal Fury: City of the Wolves", platforms: "(PS5, PS4, Xbox Series X|S, PC)", date: "2025-04-21" },
+            { name: "Ascensão da Rebelião", platforms: "(PC)", date: "2025-04-21" },
+            { name: "Creepy Redneck Dinosaur Mansion 3", platforms: "(PC)", date: "2025-04-22" },
+            { name: "Fora de Mãos", platforms: "(PC)", date: "2025-04-22" },
+            { name: "Steel Seed", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-22" },
+            { name: "The Elder Scrolls IV: Oblivion Remastered", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-22" },
+            { name: "War Rats", platforms: "(PC)", date: "2025-04-22" },
+            { name: "Beholder: Maestro", platforms: "(PC)", date: "2025-04-23" },
+            { name: "Old Skies", platforms: "(PC, Switch)", date: "2025-04-23" },
+            { name: "Sunderfolk", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-04-23" },
+            { name: "Clair Obscur: Expedition 33", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-04-24" },
+            { name: "Realpolitiks 3: Terra e Além", platforms: "(PC)", date: "2025-04-24" },
+            { name: "Super Technos World: River City e Arcade Classics", platforms: "(PS5, Switch, PC)", date: "2025-04-24" },
+            { name: "The Hundred Line - Last Defense Academy", platforms: "(Switch, PC)", date: "2025-04-24" },
+            { name: "Days Gone Remastered", platforms: "(PS5)", date: "2025-04-25" },
+            { name: "Starless Abyss", platforms: "(PC)", date: "2025-04-25" },
+            { name: "Warfare Legacy Collection", platforms: "(PC)", date: "2025-04-28" },
+            { name: "Blight Night", platforms: "(PC)", date: "2025-04-29" },
+            { name: "Forza Horizon 5", platforms: "(PS5)", date: "2025-04-29" },
+            { name: "Moroi", platforms: "(PC)", date: "2025-04-30" },
+            { name: "Skin Deep", platforms: "(PC)", date: "2025-04-30" },
+            { name: "StarVaders", platforms: "(PC)", date: "2025-04-30" },
+            // Maio de 2025
+            { name: "Shotgun Cop Man", platforms: "(PC)", date: "2025-05-01" },
+            { name: "What The Clash?", platforms: "(Apple Arcade)", date: "2025-05-01" },
+            { name: "Vellum", platforms: "(PC)", date: "2025-05-02" },
+            { name: "Melhor servido frio", platforms: "(PC)", date: "2025-05-05" },
+            { name: "Drop Duchy", platforms: "(PC)", date: "2025-05-05" },
+            { name: "Among Us 3D", platforms: "(PC)", date: "2025-05-06" },
+            { name: "Blight Night", platforms: "(PC)", date: "2025-05-06" },
+            { name: "Siegecaster", platforms: "(PC)", date: "2025-05-06" },
+            { name: "Desbloquear", platforms: "(PC)", date: "2025-05-06" },
+            { name: "Deck of Haunts", platforms: "(PC)", date: "2025-05-07" },
+            { name: "Survival Machine", platforms: "(PC)", date: "2025-05-07" },
+            { name: "Bahamut e a Árvore Waqwaq", platforms: "(PC)", date: "2025-05-08" },
+            { name: "A Vingança do Planeta Selvagem", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-08" },
+            { name: "Sonic Rumble", platforms: "(PC, iOS, Android)", date: "2025-05-08" },
+            { name: "The Midnight Walk", platforms: "(PS5, PC)", date: "2025-05-08" },
+            { name: "Vambrace: Dungeon Monarch", platforms: "(PC)", date: "2025-05-08" },
+            { name: "Sim, Vossa Graça: Snowfall", platforms: "(PC)", date: "2025-05-08" },
+            { name: "Legacy of Sin: Ill-Boding", platforms: "(PC)", date: "2025-05-12" },
+            { name: "Labirinto do Rei Demônio", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-05-13" },
+            { name: "Omega Crafter", platforms: "(PC)", date: "2025-05-14" },
+            { name: "Void Sails", platforms: "(PC)", date: "2025-05-14" },
+            { name: "Broventure: The Wild Co-op", platforms: "(PC)", date: "2025-05-15" },
+            { name: "Doom: The Dark Ages", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-15" },
+            { name: "Nubs: Arena", platforms: "(PC)", date: "2025-05-15" },
+            { name: "Tennis Manager 25", platforms: "(PC)", date: "2025-05-15" },
+            { name: "Capcom Fighting Collection 2", platforms: "(PS4, Xbox One, Switch, PC)", date: "2025-05-16" },
+            { name: "Kulebra e as Almas do Limbo", platforms: "(Xbox Series X|S, Switch, PC)", date: "2025-05-16" },
+            { name: "Da Vida e da Terra", platforms: "(PC)", date: "2025-05-16" },
+            { name: "Flor Imortal", platforms: "(PC)", date: "2025-05-16" },
+            { name: "Frog Legs", platforms: "(PC)", date: "2025-05-19" },
+            { name: "Kathy Rain 2: Soothsayer", platforms: "(PC)", date: "2025-05-20" },
+            { name: "Mutantes: Genesis", platforms: "(PC, iOS, Android)", date: "2025-05-20" },
+            { name: "Roadcraft", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-20" },
+            { name: "The Mosquito Gang", platforms: "(PC)", date: "2025-05-20" },
+            { name: "O Cerco e a Raposa da Areia", platforms: "(PC)", date: "2025-05-20" },
+            { name: "Fantasy Life i: The Girl Who Steals Time", platforms: "(Switch, PC)", date: "2025-05-21" },
+            { name: "Games of Thrones: Kingsroad", platforms: "(PC, iOS, Android)", date: "2025-05-21" },
+            { name: "Monster Train 2", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-05-21" },
+            { name: "Cookie Clicker", platforms: "(PS5, Xbox Series X|S, Switch, Switch 2)", date: "2025-05-22" },
+            { name: "Entrega a todo custo", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-22" },
+            { name: "Duck Detective: The Secret Salami", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Vovó, Não!", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Lynked: Banner of the Spark", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-22" },
+            { name: "Onimusha 2: Samurai's Destiny", platforms: "(PS4, Xbox One, Switch, PC)", date: "2025-05-22" },
+            { name: "Fora de Vista", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-05-22" },
+            { name: "Survive The Fall", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Teenage Mutant Ninja Turtles: Tactical Takedown", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Warhammer 40.000: Speed ​​Freeks", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Warhammer 40.000: Boltgun - Palavras de Vingança", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Adoradores de Cthulhu", platforms: "(PC)", date: "2025-05-22" },
+            { name: "Tainted Grail: The Fall of Avalon", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-23" },
+            { name: "Twilight Wars", platforms: "(PC)", date: "2025-05-23" },
+            { name: "The Rewinder 2", platforms: "(PC)", date: "2025-05-26" },
+            { name: "Oddsparks: Uma Aventura de Automação", platforms: "(PC)", date: "2025-05-27" },
+            { name: "To a T", platforms: "(Xbox Series X|S, Xbox One, PC)", date: "2025-05-28" },
+            { name: "Backrooms Nível X", platforms: "(PC)", date: "2025-05-29" },
+            { name: "Fomography", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-29" },
+            { name: "Ilhas e Trens", platforms: "(PC)", date: "2025-05-29" },
+            { name: "Projected Dreams", platforms: "(PC)", date: "2025-05-29" },
+            { name: "Disney Illusion Island", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-05-30" },
+            { name: "Elden Ring: Nightreign", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-05-30" },
+            { name: "Rune Factory: Guardians of Azuma", platforms: "(Switch, PC)", date: "2025-05-30" },
+            // Junho de 2025
+            { name: "Voidsayer", platforms: "(PC)", date: "2025-06-02" },
+            { name: "Void Scout", platforms: "(PC)", date: "2025-06-02" },
+            { name: "Galactic Glitch", platforms: "(PC)", date: "2025-06-03" },
+            { name: "NWO - Anarchy Collapsed", platforms: "(PC)", date: "2025-06-03" },
+            { name: "Deltarune Capítulos 3 e 4", platforms: "(PS5, PS4, Switch, PC)", date: "2025-06-04" },
+            { name: "Bravely Default Flying Fairy HD Remaster", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Civilization 7", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Cyberpunk 2077: Ultimate Edition", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Fast Fusion", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Final Fantasy 7 Remake Intergrade", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Fortnite", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Hitman World of Assassination - Signature Edition", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Hogwarts Legacy", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Mario Kart World", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Lançamento do console Nintendo Switch 2", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Tour de Boas-Vindas do Nintendo Switch 2", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Rune Factory: Guardians of Azuma", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Street Fighter 6", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "The Legend of Zelda: Breath of the Wild", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "The Legend of Zelda: Tears of the Kingdom", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Experimento Paralelo", platforms: "(PC, iOS, Android)", date: "2025-06-05" },
+            { name: "Yakuza 0: Director's Cut", platforms: "(Switch 2)", date: "2025-06-05" },
+            { name: "Splitgate 2", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-06-06" },
+            { name: "Berserk or Die", platforms: "(PC)", date: "2025-06-08" },
+            { name: "Dune: Awakening", platforms: "(PC)", date: "2025-06-10" },
+            { name: "MindsEye", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-06-10" },
+            { name: "Warhammer 40.000: Space Marine Master Crafted Edition", platforms: "(Xbox Series X|S, PC)", date: "2025-06-10" },
+            { name: "Wizard of Legend 2", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-06-12" },
+            { name: "The Alters", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-06-13" },
+            { name: "Trilogia Gex", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-06-16" },
+            { name: "FBC: Firebreak", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-06-17" },
+            { name: "Kity Builder", platforms: "(PC)", date: "2025-06-17" },
+            { name: "Shadowverse: Worlds Beyond", platforms: "(PC, iOS, Android)", date: "2025-06-17" },
+            { name: "Hell Clock", platforms: "(PC)", date: "2025-06-18" },
+            { name: "The Colony: New Haven Chronicles", platforms: "(PC)", date: "2025-06-18" },
+            { name: "Torne-se a Lua", platforms: "(PC)", date: "2025-06-19" },
+            { name: "Raidou Remastered", platforms: "(PS5, PS4, Xbox Series X|S, Switch, PC)", date: "2025-06-19" },
+            { name: "Rematch", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-06-19" },
+            { name: "Through The Nightmares", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-06-19" },
+            { name: "Tobacco Shop Simulator", platforms: "(PC)", date: "2025-06-22" },
+            { name: "Shuffle Tactics", platforms: "(PC)", date: "2025-06-24" },
+            { name: "Heróis do Monte Dragão", platforms: "(PC)", date: "2025-06-25" },
+            { name: "Segundas Chances", platforms: "(PC)", date: "2025-06-25" },
+            { name: "Front Mission 3: Remake", platforms: "(Switch)", date: "2025-06-26" },
+            { name: "Death Stranding 2: On The Beach", platforms: "(PS5)", date: "2025-06-26" },
+            { name: "Persona 5: The Phantom X", platforms: "(PC, iOS, Android)", date: "2025-06-26" },
+            { name: "Ruffy and the Riverside", platforms: "(PS5, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-06-26" },
+            { name: "System Shock 2: Remasterização do 25º Aniversário", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-06-26" },
+            { name: "Horizon Journey", platforms: "(PC)", date: "2025-06-27" },
+            { name: "Tamagotchi Plaza", platforms: "(Switch)", date: "2025-06-27" },
+            // Julho de 2025
+            { name: "Missile Command Delta", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-07-08" },
+            { name: "EA Sports College Football 26", platforms: "(PS5, Xbox Series X|S)", date: "2025-07-10" },
+            { name: "Patapon 1 + 2 Replay", platforms: "(PS5, Switch, PC)", date: "2025-07-11" },
+            { name: "Tony Hawk's Pro Skater 3 + 4", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, Switch 2, PC)", date: "2025-07-11" },
+            { name: "Edens Zero", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-07-15" },
+            { name: "Medievaly: Battle Simulator", platforms: "(PC)", date: "2025-07-16" },
+            { name: "Donkey Kong Bananza", platforms: "(Switch 2)", date: "2025-07-17" },
+            { name: "The Drifter", platforms: "(PC)", date: "2025-07-17" },
+            { name: "The Wandering Village", platforms: "(Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-07-17" },
+            { name: "Shadow Labyrinth", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-07-18" },
+            { name: "Hell Clock", platforms: "(PC)", date: "2025-07-22" },
+            { name: "Monument Valley 3", platforms: "(PS5, PS4, Xbox Series X|S, Switch, PC)", date: "2025-07-22" },
+            { name: "Killing Floor 3", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-07-24" },
+            { name: "Super Mario Party Jamboree + Jamboree TV", platforms: "(Switch 2)", date: "2025-07-24" },
+            { name: "Wuchang: Fallen Feathers", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-07-24" },
+            { name: "No Sleep For Kaname Date - De AI: The Somnium Files", platforms: "(Switch)", date: "2025-07-25" },
+            { name: "Relicbound", platforms: "(PC)", date: "2025-07-28" },
+            { name: "Prévia de Grounded 2", platforms: "(Xbox Series X|S, PC)", date: "2025-07-29" },
+            { name: "Mado Monogatari: Fia and the Wondrous Academy", platforms: "(PS5, PS4, Switch)", date: "2025-07-29" },
+            { name: "Tales of the Shire: Um jogo do Senhor dos Anéis", platforms: "(PC, consoles)", date: "2025-07-29" },
+            { name: "Ninja Gaiden Ragebound", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-07-31" },
+            // Agosto de 2025
+            { name: "Gradius Origins", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-08-07" },
+            { name: "Mafia: The Old Country", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-08-08" },
+            { name: "Madden NFL 26", platforms: "(PS5, Xbox Series X|S, Switch 2, PC)", date: "2025-08-14" },
+            { name: "Sword of the Sea", platforms: "(PS5, PC)", date: "2025-08-19" },
+            { name: "Gears of War: Reloaded", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-08-26" },
+            { name: "Story of Seasons: Grand Bazaar", platforms: "(Switch, PC)", date: "2025-08-27" },
+            { name: "Kirby and the Forgotten Land + Star-Crossed World", platforms: "(Switch 2)", date: "2025-08-27" },
+            { name: "Metal Gear Solid Delta: Snake Eater", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-08-28" },
+            { name: "Super Robot Wars Y", platforms: "(PS5, Switch, PC)", date: "2025-08-28" },
+            { name: "The Knightling", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-08-28" },
+            { name: "Lost Soul Aside", platforms: "(PS5, PC)", date: "2025-08-29" },
+            { name: "Shinobi: Art of Vengealed", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-08-29" },
+            // Setembro de 2025
+            { name: "Hell is Us", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-09-04" },
+            { name: "Indiana Jones e o Grande Círculo: DLC Ordem dos Gigantes", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-09-04" },
+            { name: "Everybody's Golf Hot Shots", platforms: "(PS5, Switch, PC)", date: "2025-09-05" },
+            { name: "Baby Steps", platforms: "(PS5, PC)", date: "2025-09-08" },
+            { name: "Garfield Kart 2: All You Can Drift", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-09-10" },
+            { name: "Borderlands 4", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-09-12" },
+            { name: "Deep Rock Galactic: Survivor", platforms: "(PC)", date: "2025-09-17" },
+            { name: "Towa e os Guardiões da Árvore Sagrada", platforms: "(PS5, Xbox Series X|S, Switch, PC)", date: "2025-09-19" },
+            { name: "Trails in the Sky 1º Capítulo", platforms: "(PS5, Switch, PC)", date: "2025-09-19" },
+            { name: "Marathon", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-09-23" },
+            { name: "Silent Hill f", platforms: "(PS5, PC)", date: "2025-09-25" },
+            { name: "Sonic Racing: CrossWorlds", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, Switch, PC)", date: "2025-09-25" },
+            { name: "NBA Bounce", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-09-26" },
+            { name: "Final Fantasy Tactics: The Ivalice Chronicles", platforms: "(PS5, PS4, Xbox Series X|S, Switch 2, Switch, PC)", date: "2025-09-30" },
+            // Outubro de 2025
+            { name: "Diretiva 8020", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-02" },
+            { name: "Ghost of Yotei", platforms: "(PS5)", date: "2025-10-02" },
+            { name: "Neon Inferno", platforms: "(PC)", date: "2025-10-02" },
+            { name: "Digimon Story: Time Stranger", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-03" },
+            { name: "Pokémon Legends: ZA", platforms: "(Switch, Switch 2)", date: "2025-10-16" },
+            { name: "Keeper", platforms: "(Xbox Series X|S, PC)", date: "2025-10-17" },
+            { name: "Escape Simulator 2", platforms: "(PC)", date: "2025-10-21" },
+            { name: "Jurassic World Evolution 3", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-21" },
+            { name: "Ninja Gaiden 4", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-21" },
+            { name: "Double Dragon Revive", platforms: "(PS5, PS4, Xbox Series X|S, Xbox One, PC)", date: "2025-10-23" },
+            { name: "The Outer Worlds 2", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-29" },
+            { name: "Arc Raiders", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-10-30" },
+            // Novembro de 2025
+            { name: "Cairn", platforms: "(PS5, PC)", date: "2025-11-05" },
+            { name: "Ano 117: Pax Romana", platforms: "(PS5, Xbox Series X|S, PC)", date: "2025-11-13" },
+            // Dezembro de 2025
+            { name: "Nome do Jogo: A confirmar", platforms: "(A confirmar)", date: "2025-12-01" }, // Data fictícia para dezembro
+        ];
+
+        // Variáveis para o calendário
+        let currentDate = new Date();
+        let selectedDate = null;
+
+        // Nomes dos meses completos e abreviados
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const monthNamesShort = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+                                 "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+        const gameListDiv = document.getElementById('gameList');
+        const currentMonthYearHeader = document.getElementById('currentMonthYear');
+        const calendarDaysGrid = document.getElementById('calendarDays');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const calendarToggleBtn = document.getElementById('calendarToggleBtn');
+        const calendarDropdown = document.getElementById('calendarDropdown');
+        const currentDateBtnText = document.getElementById('currentDateBtnText');
+        const clearFilterBtn = document.getElementById('clearFilterBtn'); // Novo botão
+
+        // Função para formatar a data para comparação
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
+        // Função para atualizar o texto do botão com a data atual
+        const updateCurrentDateButtonText = () => {
+            const today = new Date();
+            const day = today.getDate();
+            const month = monthNames[today.getMonth()];
+            currentDateBtnText.textContent = `${day} de ${month}`;
+        };
+
+        // Função para exibir os jogos
+        function displayGames(startDate = null) {
+            gameListDiv.innerHTML = ''; // Limpa a lista de jogos
+
+            let filteredGames = allGames;
+
+            if (startDate) {
+                // Converte a data de início para um objeto Date para comparação
+                const startDateTime = new Date(startDate);
+                startDateTime.setHours(0, 0, 0, 0); // Zera o horário para comparar apenas a data
+
+                filteredGames = allGames.filter(game => {
+                    const gameDateTime = new Date(game.date);
+                    gameDateTime.setHours(0, 0, 0, 0);
+                    return gameDateTime >= startDateTime;
+                });
+
+                // Ordena os jogos filtrados por data
+                filteredGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+            } else {
+                // Se não houver data selecionada, exibe todos os jogos ordenados
+                filteredGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+            }
+
+            // Agrupa os jogos por mês
+            const gamesByMonth = filteredGames.reduce((acc, game) => {
+                const gameDate = new Date(game.date);
+                const yearMonth = `${gameDate.getFullYear()}-${String(gameDate.getMonth() + 1).padStart(2, '0')}`;
+                if (!acc[yearMonth]) {
+                    acc[yearMonth] = [];
+                }
+                acc[yearMonth].push(game);
+                return acc;
+            }, {});
+
+            if (Object.keys(gamesByMonth).length === 0) {
+                gameListDiv.innerHTML = `<p class="text-gray-400 text-center text-lg mt-8">Nenhum lançamento encontrado para a data selecionada ou posterior.</p>`;
+                return;
+            }
+
+            for (const yearMonth in gamesByMonth) {
+                const [year, month] = yearMonth.split('-');
+                const monthName = monthNames[parseInt(month) - 1];
+
+                const monthSectionId = `${monthName.toLowerCase()}${year}`; // ex: janeiro2025
+                const monthSectionTitle = `${monthName} de ${year}`;
+
+                // Adiciona o cabeçalho do mês
+                const monthHeader = document.createElement('h2');
+                monthHeader.id = monthSectionId;
+                monthHeader.className = "text-3xl font-bold text-blue-400 mb-6 border-b-2 border-blue-600 pb-2";
+                monthHeader.textContent = monthSectionTitle;
+                gameListDiv.appendChild(monthHeader);
+
+                // Adiciona os jogos do mês
+                gamesByMonth[yearMonth].forEach(game => {
+                    const gameEntry = document.createElement('div');
+                    gameEntry.className = "game-entry";
+                    // Formata a data do jogo sem o ano, pois o cabeçalho do mês já tem o ano
+                    const gameDayMonth = new Date(game.date).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+                    gameEntry.innerHTML = `
+                        <div class="game-info">
+                            <p>${game.name} <span class="platform-text">${game.platforms}</span> - ${gameDayMonth}</p>
+                        </div>
+                    `;
+                    gameListDiv.appendChild(gameEntry);
+                });
+            }
+        }
+
+        // Função para gerar o calendário
+        function renderCalendar() {
+            calendarDaysGrid.innerHTML = '';
+            // Usa o nome abreviado do mês
+            currentMonthYearHeader.textContent = `${monthNamesShort[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const today = new Date(); // Para marcar o dia atual
+
+            // Preenche os dias vazios no início do mês
+            for (let i = 0; i < firstDayOfMonth.getDay(); i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('calendar-day', 'empty-day');
+                calendarDaysGrid.appendChild(emptyDiv);
+            }
+
+            // Preenche os dias do mês
+            for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day', 'current-month');
+                dayDiv.textContent = day;
+                
+                const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                const formattedDayDate = formatDate(dayDate);
+
+                if (formattedDayDate === formatDate(today)) {
+                    dayDiv.classList.add('today');
+                }
+                if (selectedDate && formattedDayDate === formatDate(selectedDate)) {
+                    dayDiv.classList.add('selected');
+                }
+
+                dayDiv.dataset.date = formattedDayDate; // Armazena a data completa
+                dayDiv.addEventListener('click', (event) => {
+                    // Remove a seleção anterior
+                    const previouslySelected = document.querySelector('.calendar-day.selected');
+                    if (previouslySelected) {
+                        previouslySelected.classList.remove('selected');
+                    }
+                    // Adiciona a nova seleção
+                    event.target.classList.add('selected');
+                    selectedDate = new Date(event.target.dataset.date);
+                    displayGames(selectedDate);
+                    calendarDropdown.style.display = 'none'; // Oculta o calendário após a seleção
+                });
+                calendarDaysGrid.appendChild(dayDiv);
+            }
+        }
+
+        // Event Listeners para navegação do calendário
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+            // Ao mudar o mês, limpa a seleção e exibe todos os jogos novamente
+            selectedDate = null;
+            displayGames();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+            // Ao mudar o mês, limpa a seleção e exibe todos os jogos novamente
+            selectedDate = null;
+            displayGames();
+        });
+
+        // Event listener para o botão de toggle do calendário
+        calendarToggleBtn.addEventListener('click', (event) => {
+            // Impede que o clique no botão feche o calendário imediatamente
+            event.stopPropagation();
+            calendarDropdown.style.display = calendarDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Event listener para o novo botão "Limpar Filtro"
+        clearFilterBtn.addEventListener('click', () => {
+            selectedDate = null; // Limpa a data selecionada
+            displayGames(); // Exibe todos os jogos novamente
+            // Remove a classe 'selected' de qualquer dia que possa estar selecionado
+            const previouslySelected = document.querySelector('.calendar-day.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+            calendarDropdown.style.display = 'none'; // Oculta o calendário
+        });
+
+        // Ocultar o calendário se clicar fora dele
+        document.addEventListener('click', (event) => {
+            if (!calendarDropdown.contains(event.target) && !calendarToggleBtn.contains(event.target)) {
+                calendarDropdown.style.display = 'none';
+            }
+        });
+
+        // Inicializa o calendário e exibe todos os jogos na carga da página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCurrentDateButtonText(); // Define o texto do botão com a data atual
+            renderCalendar();
+            displayGames(); // Exibe todos os jogos no carregamento inicial
+        });
+    </script>
 </body>
 </html>
