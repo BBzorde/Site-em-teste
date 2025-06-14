@@ -75,7 +75,7 @@
             <div id="promotions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- As promoções serão carregadas aqui pelo JavaScript -->
                 <p id="loading-message" class="col-span-full text-center text-gray-400">Carregando promoções...</p>
-                <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique se o arquivo JSON 'steam_promotions.json' está na mesma pasta que este arquivo HTML e se o conteúdo é válido.</p>
+                <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique a URL da função Cloud Functions e sua configuração (CORS).</p>
             </div>
         </section>
     </main>
@@ -98,22 +98,19 @@
             const loadingMessage = document.getElementById('loading-message');
             const errorMessage = document.getElementById('error-message');
 
-            // Caminho para o arquivo JSON gerado pelo bot
-            // É CRUCIAL que este arquivo JSON esteja na MESMA PASTA que o promocoes.html
-            const jsonFilePath = 'steam_promotions.json'; 
+            // Substitua 'SUA_URL_DA_CLOUD_FUNCTION_AQUI' pelo URL real da sua função do Google Cloud Functions
+            // URL da função Steam Promotions: https://southamerica-east1-site-teste-462921.cloudfunctions.net/scrape-steam-promotions-function
+            const jsonFilePath = 'https://southamerica-east1-site-teste-462921.cloudfunctions.net/scrape-steam-promotions-function'; 
 
             fetch(jsonFilePath)
                 .then(response => {
-                    // Verifica se a resposta HTTP foi bem-sucedida (status 200 OK)
                     if (!response.ok) {
-                        // Lança um erro para ser capturado no .catch
-                        throw new Error(`HTTP error! status: ${response.status} - Verifique o caminho do arquivo JSON.`);
+                        throw new Error(`HTTP error! status: ${response.status} - Verifique a URL da função Cloud Functions.`);
                     }
-                    return response.json(); // Tenta parsear a resposta como JSON
+                    return response.json();
                 })
                 .then(data => {
                     loadingMessage.classList.add('hidden'); // Oculta a mensagem de carregamento
-                    // Verifica se os dados e a lista de promoções existem e não estão vazios
                     if (data && data.promotions && data.promotions.length > 0) {
                         promotionsGrid.innerHTML = ''; // Limpa o conteúdo de carregamento
 
@@ -147,7 +144,7 @@
                         });
                     } else {
                         // Se não houver promoções nos dados ou os dados forem inválidos
-                        promotionsGrid.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada no arquivo JSON ou o arquivo está vazio.</p>';
+                        promotionsGrid.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada na URL da função Cloud Functions ou o resultado está vazio/inválido.</p>';
                     }
                 })
                 .catch(error => {
