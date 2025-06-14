@@ -1,0 +1,185 @@
+{
+    "page_title": "Busca Steam",
+    "promotions": [
+        {
+            "title": "Forza Horizon 5",
+            "link": "https://store.steampowered.com/app/1551360/Forza_Horizon_5/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/capsule_sm_120.jpg?t=1746471508",
+            "image_alt": "Forza Horizon 5",
+            "discount_percent": "-50%",
+            "original_price": "R$249,00",
+            "final_price": "R$124,50"
+        },
+        {
+            "title": "Resident Evil 4",
+            "link": "https://store.steampowered.com/app/2050650/Resident_Evil_4/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/capsule_sm_120.jpg?t=1736385712",
+            "image_alt": "Resident Evil 4",
+            "discount_percent": "-50%",
+            "original_price": "R$139,00",
+            "final_price": "R$69,50"
+        },
+        {
+            "title": "Resident Evil 7 Biohazard",
+            "link": "https://store.steampowered.com/app/418370/Resident_Evil_7_Biohazard/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/418370/capsule_sm_120.jpg?t=1728436752",
+            "image_alt": "Resident Evil 7 Biohazard",
+            "discount_percent": "-60%",
+            "original_price": "R$66,90",
+            "final_price": "R$26,76"
+        },
+        {
+            "title": "Resident Evil 7 Gold Edition & Village Gold Edition",
+            "link": "https://store.steampowered.com/sub/1252652/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/subs/1252652/82f1e7eed3419868ac6306c5e5da642302c95a1c/capsule_sm_120.jpg?t=1741978493",
+            "image_alt": "Resident Evil 7 Gold Edition & Village Gold Edition",
+            "discount_percent": "-75%",
+            "original_price": "R$279,00",
+            "final_price": "R$69,75"
+        },
+        {
+            "title": "DEATH STRANDING DIRECTOR'S CUT",
+            "link": "https://store.steampowered.com/app/1850570/DEATH_STRANDING_DIRECTORS_CUT/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1850570/f98586104479ed55cdb3de18c42b0dc6120691fe/capsule_sm_120.jpg?t=1728989088",
+            "image_alt": "DEATH STRANDING DIRECTOR'S CUT",
+            "discount_percent": "-60%",
+            "original_price": "R$159,00",
+            "final_price": "R$63,60"
+        },
+        {
+            "title": "SILENT HILL 2",
+            "link": "https://store.steampowered.com/app/2124490/SILENT_HILL_2/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2124490/capsule_sm_120.jpg?t=1744248682",
+            "image_alt": "SILENT HILL 2",
+            "discount_percent": "-40%",
+            "original_price": "R$349,90",
+            "final_price": "R$209,94"
+        },
+        {
+            "title": "The Alters",
+            "link": "https://store.steampowered.com/app/1601570/The_Alters/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601570/5934a27732c4867d605121201078eae8bd46ef4e/capsule_sm_120.jpg?t=1749924282",
+            "image_alt": "The Alters",
+            "discount_percent": "-10%",
+            "original_price": "R$101,99",
+            "final_price": "R$91,79"
+        },
+        {
+            "title": "ARK: Survival Ascended",
+            "link": "https://store.steampowered.com/app/2399830/ARK_Survival_Ascended/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2399830/capsule_sm_120.jpg?t=1744843097",
+            "image_alt": "ARK: Survival Ascended",
+            "discount_percent": "-50%",
+            "original_price": "R$220,00",
+            "final_price": "R$110,00"
+        },
+        {
+            "title": "Resident Evil Village",
+            "link": "https://store.steampowered.com/app/1196590/Resident_Evil_Village/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1196590/capsule_sm_120.jpg?t=1741142800",
+            "image_alt": "Resident Evil Village",
+            "discount_percent": "-75%",
+            "original_price": "R$139,00",
+            "final_price": "R$34,75"
+        },
+        {
+            "title": "End of Zoe",
+            "link": "https://store.steampowered.com/app/530611/End_of_Zoe/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/530611/capsule_sm_120.jpg?t=1683527618",
+            "image_alt": "End of Zoe",
+            "discount_percent": "-75%",
+            "original_price": "R$49,90",
+            "final_price": "R$12,47"
+        },
+        {
+            "title": "Dying Light",
+            "link": "https://store.steampowered.com/app/239140/Dying_Light/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/239140/04f5f510bda7a47ea9d0ff8b2f3313072035d81b/capsule_sm_120.jpg?t=1738004178",
+            "image_alt": "Dying Light",
+            "discount_percent": "-80%",
+            "original_price": "R$50,99",
+            "final_price": "R$10,19"
+        },
+        {
+            "title": "METAL GEAR SOLID V: THE PHANTOM PAIN",
+            "link": "https://store.steampowered.com/app/287700/METAL_GEAR_SOLID_V_THE_PHANTOM_PAIN/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/287700/capsule_sm_120.jpg?t=1727849445",
+            "image_alt": "METAL GEAR SOLID V: THE PHANTOM PAIN",
+            "discount_percent": "-60%",
+            "original_price": "R$99,00",
+            "final_price": "R$39,60"
+        },
+        {
+            "title": "Grand Theft Auto: San Andreas – The Definitive Edition",
+            "link": "https://store.steampowered.com/app/1547000/Grand_Theft_Auto_San_Andreas__The_Definitive_Edition/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1547000/capsule_sm_120.jpg?t=1741117455",
+            "image_alt": "Grand Theft Auto: San Andreas – The Definitive Edition",
+            "discount_percent": "-60%",
+            "original_price": "R$299,90",
+            "final_price": "R$119,96"
+        },
+        {
+            "title": "METAL GEAR RISING: REVENGEANCE",
+            "link": "https://store.steampowered.com/app/235460/METAL_GEAR_RISING_REVENGEANCE/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/235460/capsule_sm_120.jpg?t=1740076034",
+            "image_alt": "METAL GEAR RISING: REVENGEANCE",
+            "discount_percent": "-60%",
+            "original_price": "R$49,99",
+            "final_price": "R$19,99"
+        },
+        {
+            "title": "Devil May Cry 5",
+            "link": "https://store.steampowered.com/app/601150/Devil_May_Cry_5/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/601150/capsule_sm_120.jpg?t=1701395090",
+            "image_alt": "Devil May Cry 5",
+            "discount_percent": "-75%",
+            "original_price": "R$99,00",
+            "final_price": "R$24,75"
+        },
+        {
+            "title": "METAL GEAR SOLID V: The Definitive Experience",
+            "link": "https://store.steampowered.com/sub/132479/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/subs/132479/capsule_sm_120.jpg?t=1653977022",
+            "image_alt": "METAL GEAR SOLID V: The Definitive Experience",
+            "discount_percent": "-60%",
+            "original_price": "R$99,00",
+            "final_price": "R$39,60"
+        },
+        {
+            "title": "Overcooked! 2",
+            "link": "https://store.steampowered.com/app/728880/Overcooked_2/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/728880/capsule_sm_120.jpg?t=1749715475",
+            "image_alt": "Overcooked! 2",
+            "discount_percent": "-75%",
+            "original_price": "R$59,90",
+            "final_price": "R$14,97"
+        },
+        {
+            "title": "Monster Hunter: World",
+            "link": "https://store.steampowered.com/app/582010/Monster_Hunter_World/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/582010/capsule_sm_120.jpg?t=1734656748",
+            "image_alt": "Monster Hunter: World",
+            "discount_percent": "-67%",
+            "original_price": "R$99,00",
+            "final_price": "R$32,67"
+        },
+        {
+            "title": "Dying Light 2 Stay Human: Reloaded Edition",
+            "link": "https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human_Reloaded_Edition/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/534380/e67370be55f518fbfb3dd41a6718e06ddcded4d2/capsule_sm_120.jpg?t=1739988558",
+            "image_alt": "Dying Light 2 Stay Human: Reloaded Edition",
+            "discount_percent": "-67%",
+            "original_price": "R$249,00",
+            "final_price": "R$82,17"
+        },
+        {
+            "title": "inZOI",
+            "link": "https://store.steampowered.com/app/2456740/inZOI/?snr=1_7_7_2300_150_1",
+            "image_src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2456740/db7e09bed342057b3ae057d5a2fcfb94a37f0762/capsule_sm_120.jpg?t=1749740105",
+            "image_alt": "inZOI",
+            "discount_percent": "-10%",
+            "original_price": "R$149,90",
+            "final_price": "R$134,91"
+        }
+    ]
+}
