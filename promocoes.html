@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Promoções - F5 Games</title>
+        <!-- Favicon personalizado -->
+        <link rel="icon" type="image/webp" href="https://i.ibb.co/Q7QTMNrt/key-f5-symbol-black-computer-260nw-1968799435.webp">
         <!-- Incluindo Tailwind CSS via CDN para estilo rápido e responsivo -->
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- Font Inter para uma tipografia moderna e limpa -->
@@ -447,7 +449,7 @@
                 <div id="promotions-list" class="max-w-4xl mx-auto grid">
                     <!-- As promoções serão carregadas aqui pelo JavaScript -->
                     <p id="loading-message" class="col-span-full text-center text-gray-400">Carregando promoções...</p>
-                    <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique a URL da função Cloud Functions e sua configuração (CORS).</p>
+                    <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique a URL da função Cloud Functions ou sua configuração (CORS).</p>
                     <p id="no-results-message" class="col-span-full text-center text-gray-400 hidden">Nenhum jogo encontrado com o termo de busca.</p>
                 </div>
 
@@ -508,7 +510,7 @@
                 const itemsPerPageSelect = document.getElementById('itemsPerPageSelect');
                 const backToTopBtn = document.getElementById('backToTopBtn');
                 const searchInput = document.getElementById('searchInput');
-                const searchIconButton = document.getElementById('searchIconButton'); // Referência ao NOVO botão de lupa
+                const searchIconButton = document.getElementById('searchIconButton');
                 const clearSearchButton = document.getElementById('clearSearchButton');
                 const sortSelect = document.getElementById('sortSelect');
 
@@ -532,6 +534,49 @@
                         listViewBtn.classList.add('active');
                         columnViewBtn.classList.remove('active');
                     }
+                }
+
+                // Função auxiliar para formatar valores monetários em BRL
+                function formatPrice(priceString) {
+                    console.log('--- formatPrice Input ---');
+                    console.log('Original priceString:', priceString);
+
+                    if (!priceString || priceString.toLowerCase().includes('gratuito') || priceString.trim() === 'N/A') {
+                        console.log('Formatted as Gratuito/N/A');
+                        return 'Gratuito';
+                    }
+
+                    // Remove qualquer símbolo de moeda e caracteres não numéricos, exceto vírgulas e pontos.
+                    let cleanPrice = priceString.replace(/[^\d,\.]/g, '').trim();
+                    console.log('After removing non-numeric/non-comma/non-period chars:', cleanPrice);
+
+                    // Verifica se há tanto vírgula quanto ponto.
+                    // Se sim, assume que o ponto é separador de milhares e a vírgula é decimal (padrão BR).
+                    if (cleanPrice.includes(',') && cleanPrice.includes('.')) {
+                        // Remove todos os pontos (separadores de milhares)
+                        cleanPrice = cleanPrice.replace(/\./g, '');
+                        // Troca a vírgula por ponto (separador decimal)
+                        cleanPrice = cleanPrice.replace(/,/g, '.');
+                    } else if (cleanPrice.includes(',')) {
+                        // Se só tem vírgula, assume que é o separador decimal
+                        cleanPrice = cleanPrice.replace(/,/g, '.');
+                    }
+                    // Se só tem ponto, assume que já é o separador decimal ou não precisa de alteração.
+                    
+                    console.log('After standardizing decimal:', cleanPrice);
+
+                    const numericPrice = parseFloat(cleanPrice);
+                    console.log('Parsed numericPrice:', numericPrice);
+
+                    if (isNaN(numericPrice)) {
+                        console.log('Formatting failed, returning original:', priceString);
+                        return priceString; // Retorna o original se o parse falhar
+                    }
+
+                    const formatted = numericPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    console.log('Formatted price (BRL):', formatted);
+                    console.log('--- End formatPrice ---');
+                    return formatted;
                 }
 
                 function displayPromotions(page) {
@@ -559,12 +604,20 @@
                     const promotionsToDisplay = promotionsToPaginate.slice(startIndex, endIndex);
 
                     promotionsToDisplay.forEach(promo => {
+                        console.log('Processing promo:', promo.title); // Log para cada promoção
+                        console.log('  Raw original_price:', promo.original_price);
+                        console.log('  Raw final_price:', promo.final_price);
+
                         const listItem = document.createElement('div');
                         listItem.className = "promotion-list-item";
 
                         const imageUrl = (promo.image_src && promo.image_src !== "URL da imagem não encontrada" && promo.image_src.startsWith('http')) 
                             ? promo.image_src 
                             : 'https://placehold.co/80x45/5A8DED/fff?text=IMG';
+
+                        // Formata os preços antes de inserí-los no HTML
+                        const formattedOriginalPrice = formatPrice(promo.original_price);
+                        const formattedFinalPrice = formatPrice(promo.final_price);
 
                         listItem.innerHTML = `
                             <img src="${imageUrl}" alt="${promo.image_alt || 'Imagem do jogo'}" loading="lazy">
@@ -574,8 +627,8 @@
                                 </h4>
                                 <div class="price-info">
                                     ${promo.discount_percent && promo.discount_percent !== "N/A" ? `<span class="discount-percent">${promo.discount_percent}</span>` : ''}
-                                    ${promo.original_price && promo.original_price !== "Preço original não encontrado" && promo.original_price !== promo.final_price ? `<span class="original-price">${promo.original_price}</span>` : ''}
-                                    ${promo.final_price && promo.final_price !== "Preço final não encontrado" ? `<span class="final-price">${promo.final_price}</span>` : ''}
+                                    ${promo.original_price && promo.original_price !== "Preço original não encontrado" && promo.original_price !== promo.final_price ? `<span class="original-price">${formattedOriginalPrice}</span>` : ''}
+                                    ${promo.final_price && promo.final_price !== "Preço final não encontrado" ? `<span class="final-price">${formattedFinalPrice}</span>` : ''}
                                 </div>
                             </div>
                         `;
@@ -594,30 +647,47 @@
                             return sortedArray.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
                         case 'price-asc':
                             return sortedArray.sort((a, b) => {
-                                const priceA_raw = (a.final_price || '0').replace('R$', '').replace(',', '.').trim();
-                                const priceB_raw = (b.final_price || '0').replace('R$', '').replace(',', '.').trim();
-                                
-                                const priceA_parsed = parseFloat(priceA_raw);
-                                const priceB_parsed = parseFloat(priceB_raw);
+                                // Limpa e parseia os preços para números, tratando "Gratuito" como 0
+                                const getNumericPrice = (priceString) => {
+                                    if (!priceString || priceString.toLowerCase().includes('gratuito') || priceString.trim() === 'N/A') {
+                                        return 0;
+                                    }
+                                    // Remove qualquer símbolo de moeda e caracteres não numéricos, exceto vírgulas e pontos.
+                                    let cleanPrice = priceString.replace(/[^\d,\.]/g, '').trim();
+                                    if (cleanPrice.includes(',') && cleanPrice.includes('.')) {
+                                        cleanPrice = cleanPrice.replace(/\./g, ''); 
+                                        cleanPrice = cleanPrice.replace(/,/g, '.'); 
+                                    } else if (cleanPrice.includes(',')) {
+                                        cleanPrice = cleanPrice.replace(/,/g, '.'); 
+                                    }
+                                    return parseFloat(cleanPrice);
+                                };
 
-                                const finalPriceA = isNaN(priceA_parsed) || (a.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceA_parsed;
-                                const finalPriceB = isNaN(priceB_parsed) || (b.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceB_parsed;
+                                const finalPriceA = getNumericPrice(a.final_price);
+                                const finalPriceB = getNumericPrice(b.final_price);
                                 
                                 return finalPriceA - finalPriceB;
                             });
                         case 'price-desc':
                             return sortedArray.sort((a, b) => {
-                                const priceA_raw = (a.final_price || '0').replace('R$', '').replace(',', '.').trim();
-                                const priceB_raw = (b.final_price || '0').replace('R$', '').replace(',', '.').trim();
-                                
-                                const priceA_parsed = parseFloat(priceA_raw);
-                                const priceB_parsed = parseFloat(priceB_raw);
+                                // Limpa e parseia os preços para números, tratando "Gratuito" como 0
+                                const getNumericPrice = (priceString) => {
+                                    if (!priceString || priceString.toLowerCase().includes('gratuito') || priceString.trim() === 'N/A') {
+                                        return 0;
+                                    }
+                                    // Remove qualquer símbolo de moeda e caracteres não numéricos, exceto vírgulas e pontos.
+                                    let cleanPrice = priceString.replace(/[^\d,\.]/g, '').trim();
+                                    if (cleanPrice.includes(',') && cleanPrice.includes('.')) {
+                                        cleanPrice = cleanPrice.replace(/\./g, ''); 
+                                        cleanPrice = cleanPrice.replace(/,/g, '.'); 
+                                    } else if (cleanPrice.includes(',')) {
+                                        cleanPrice = cleanPrice.replace(/,/g, '.'); 
+                                    }
+                                    return parseFloat(cleanPrice);
+                                };
 
-                                const finalPriceA = isNaN(priceA_parsed) || (a.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceA_parsed;
-                                const finalPriceB = isNaN(priceB_parsed) || (b.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceB_parsed;
-
-                                // DEBUG: Adiciona console.log para ver os valores comparados
-                                console.log(`Comparando Preços (Maior ao Menor): ${a.title} (R$${finalPriceA}) vs ${b.title} (R$${finalPriceB}) -> Resultado: ${finalPriceB - finalPriceA}`);
+                                const finalPriceA = getNumericPrice(a.final_price);
+                                const finalPriceB = getNumericPrice(b.final_price);
 
                                 // A lógica para "Maior ao Menor" é subtrair B de A
                                 return finalPriceB - finalPriceA;
@@ -741,7 +811,6 @@
                     displayPromotions(currentPage);
                 });
 
-                // Altera o evento de clique para o NOVO botão de lupa
                 searchIconButton.addEventListener('click', applySearchFilter);
                 searchInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
@@ -759,11 +828,12 @@
                 fetch(jsonFilePath)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status} - Verifique a URL da função Cloud Functions e sua configuração (CORS).`);
+                            throw new Error(`HTTP error! status: ${response.status} - Verifique a URL da função Cloud Functions ou sua configuração (CORS).`);
                         }
                         return response.json();
                     })
                     .then(data => {
+                        console.log('Raw data received from Cloud Function:', data); // Log do JSON bruto
                         loadingMessage.classList.add('hidden'); // Oculta a mensagem de carregamento
                         if (data && data.promotions && data.promotions.length > 0) {
                             allPromotions = data.promotions;
@@ -802,4 +872,3 @@
         </script>
     </body>
     </html>
-    
