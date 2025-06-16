@@ -1,413 +1,563 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promoções - F5 Games</title>
-    <!-- Incluindo Tailwind CSS via CDN para estilo rápido e responsivo -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Inter para uma tipografia moderna e limpa -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Fundo escuro para tema gamer */
-            color: #e2e8f0; /* Cor do texto clara */
-        }
-        .container {
-            max-width: 1200px;
-        }
-        /* Estilo para preço original riscado */
-        .original-price {
-            text-decoration: line-through;
-            color: #9ca3af; /* text-gray-400 */
-            font-size: 0.9em;
-            margin-right: 0.5rem;
-        }
-        /* Estilo para preço final */
-        .final-price {
-            color: #34d399; /* text-green-400 */
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        /* Estilo para a porcentagem de desconto */
-        .discount-percent {
-            background-color: #ef4444; /* bg-red-500 */
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-weight: bold;
-            font-size: 0.85em;
-            margin-right: 0.5rem;
-        }
-
-        /* Estilo base para cada entrada de promoção na lista */
-        .promotion-list-item {
-            display: flex; /* Usa flexbox para alinhar itens na horizontal */
-            align-items: center; /* Centraliza itens verticalmente */
-            background-color: #2d3748; /* bg-gray-700 */
-            padding: 0.75rem 1rem; /* Espaçamento interno */
-            border-radius: 0.5rem; /* Cantos arredondados */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Sombra */
-            transition: transform 0.2s ease-in-out; /* Animação ao passar o mouse */
-            height: 100%; /* Garante que todos os itens na grade tenham a mesma altura */
-        }
-        .promotion-list-item:hover {
-            transform: translateY(-2px); /* Efeito de levantar no hover */
-        }
-        .promotion-list-item img {
-            width: 80px; /* Largura fixa para a imagem */
-            height: 45px; /* Altura fixa para a imagem (proporção 16:9) */
-            object-fit: cover; /* Garante que a imagem preencha o espaço */
-            border-radius: 0.25rem; /* Cantos arredondados na imagem */
-            margin-right: 1rem; /* Espaçamento entre a imagem e o texto */
-            flex-shrink: 0; /* Impede que a imagem encolha */
-        }
-        .promotion-details {
-            flex-grow: 1; /* Permite que os detalhes ocupem o espaço restante */
-            display: flex;
-            flex-direction: column; /* Organiza título e preços em coluna */
-        }
-        .promotion-title-link {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 600; /* font-semibold */
-            color: #fff; /* Cor do texto branca */
-            text-decoration: none; /* Remove sublinhado padrão */
-            transition: color 0.2s ease-in-out;
-        }
-        .promotion-title-link:hover {
-            color: #63b3ed; /* blue-400 */
-        }
-        .price-info {
-            display: flex;
-            align-items: center;
-            margin-top: 0.25rem; /* Pequeno espaçamento acima dos preços */
-        }
-
-        /* Estilo padrão para o layout de grade (duas colunas em telas maiores) */
-        #promotions-list {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr); /* Padrão: 1 coluna em telas pequenas */
-            gap: 1.5rem; /* Espaçamento entre os itens da grade */
-        }
-
-        @media (min-width: 768px) { /* Em telas médias (md) e maiores */
-            #promotions-list {
-                grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Promoções - F5 Games</title>
+        <!-- Incluindo Tailwind CSS via CDN para estilo rápido e responsivo -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Font Inter para uma tipografia moderna e limpa -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: #1a202c; /* Fundo escuro para tema gamer */
+                color: #e2e8f0; /* Cor do texto clara */
             }
-        }
+            .container {
+                max-width: 1200px;
+            }
+            /* Estilo para preço original riscado */
+            .original-price {
+                text-decoration: line-through;
+                color: #9ca3af; /* text-gray-400 */
+                font-size: 0.9em;
+                margin-right: 0.5rem;
+            }
+            /* Estilo para preço final */
+            .final-price {
+                color: #34d399; /* text-green-400 */
+                font-weight: bold;
+                font-size: 1.1em;
+            }
+            /* Estilo para a porcentagem de desconto */
+            .discount-percent {
+                background-color: #ef4444; /* bg-red-500 */
+                color: white;
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.25rem;
+                font-weight: bold;
+                font-size: 0.85em;
+                margin-right: 0.5rem;
+            }
 
-        /* Novo estilo para o layout de lista (uma coluna) */
-        #promotions-list.list-view {
-            display: block; /* Remove o grid */
-            gap: 0; /* Remove o gap da grade */
-        }
-        #promotions-list.list-view .promotion-list-item {
-            margin-bottom: 0.75rem; /* Espaçamento entre os itens na visualização de lista */
-        }
-        #promotions-list.list-view .promotion-list-item:last-child {
-            margin-bottom: 0; /* Remove a margem do último item */
-        }
-
-
-        /* Ajuste para telas menores */
-        @media (max-width: 640px) {
+            /* Estilo base para cada entrada de promoção na lista */
             .promotion-list-item {
-                flex-direction: column; /* Empilha a imagem e os detalhes em telas pequenas */
-                align-items: flex-start;
+                display: flex; /* Usa flexbox para alinhamento horizontal */
+                align-items: center; /* Centraliza verticalmente */
+                background-color: #2d3748; /* bg-gray-700 */
+                padding: 0.75rem 1rem; /* Espaçamento interno */
+                border-radius: 0.5rem; /* Cantos arredondados */
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Sombra */
+                transition: transform 0.2s ease-in-out; /* Animação ao passar o mouse */
+                height: 100%; /* Garante que todos os itens na grade tenham a mesma altura */
+            }
+            .promotion-list-item:hover {
+                transform: translateY(-2px); /* Efeito de levantar no hover */
             }
             .promotion-list-item img {
-                width: 100%; /* Imagem ocupa largura total em mobile */
-                height: auto; /* Altura automática */
-                margin-right: 0;
-                margin-bottom: 0.5rem; /* Espaçamento abaixo da imagem */
+                width: 80px; /* Largura fixa para a imagem */
+                height: 45px; /* Altura fixa para a imagem (proporção 16:9) */
+                object-fit: cover; /* Garante que a imagem preencha o espaço */
+                border-radius: 0.25rem; /* Cantos arredondados na imagem */
+                margin-right: 1rem; /* Espaçamento entre a imagem e o texto */
+                flex-shrink: 0; /* Impede que a imagem encolha */
             }
             .promotion-details {
-                width: 100%; /* Detalhes ocupam largura total */
+                flex-grow: 1; /* Permite que os detalhes ocupem o espaço restante */
+                display: flex;
+                flex-direction: column; /* Organiza título e preços em coluna */
             }
-        }
-
-        /* Estilos para os botões de visualização */
-        .view-toggle-container {
-            display: flex;
-            border: 2px solid #3498db; /* Borda azul para o container dos botões */
-            border-radius: 9999px; /* rounded-full */
-            overflow: hidden; /* Garante que os botões internos se ajustem à borda */
-            width: fit-content; /* Largura ajustada ao conteúdo */
-        }
-
-        .view-toggle-button {
-            background-color: transparent; /* Começa transparente */
-            color: #e2e8f0; /* Cor do ícone */
-            padding: 0.3rem 0.6rem; /* Padding base */
-            border: none; /* Remove a borda individual dos botões */
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600; /* Para o ícone, se for texto */
-            height: 28px; /* Altura fixa reduzida para 28px */
-            width: 38px; /* Largura fixa reduzida para 38px */
-        }
-        .view-toggle-button svg { /* Ajusta o tamanho do SVG dentro do botão */
-            width: 16px; /* Reduzido para 16px */
-            height: 16px; /* Reduzido para 16px */
-        }
-        .view-toggle-button:hover {
-            background-color: rgba(99, 179, 237, 0.2); /* blue-400 com 20% de opacidade no hover */
-        }
-        .view-toggle-button.active {
-            background-color: #63b3ed; /* blue-400 */
-            color: #1a202c; /* Cor do ícone ativa */
-            /* borda do container ja faz o trabalho da borda */
-        }
-
-        /* Estilos de Paginação */
-        .pagination-container {
-            display: flex;
-            justify-content: center; /* Mantém o alinhamento central dos botões de página */
-            align-items: center;
-            gap: 0.5rem; /* Espaçamento entre os botões de paginação */
-        }
-
-        .pagination-button {
-            background-color: #2d3748; /* bg-gray-700 */
-            color: #e2e8f0; /* text-gray-200 */
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem; /* Cantos arredondados */
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            font-weight: 600;
-        }
-
-        .pagination-button:hover:not(.active):not(:disabled) {
-            background-color: #4a5568; /* gray-600 */
-        }
-
-        .pagination-button.active {
-            background-color: #63b3ed; /* blue-400 */
-            color: #1a202c; /* text-gray-900 */
-            box-shadow: 0 0 0 2px #63b3ed; /* Borda destacada */
-        }
-
-        .pagination-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Estilo para o seletor de itens por página */
-        .items-per-page-selector-wrapper {
-            display: flex;
-            align-items: center;
-        }
-        .items-per-page-selector {
-            background-color: #2d3748; /* bg-gray-700 */
-            color: #e2e8f0; /* text-gray-200 */
-            padding: 0.5rem 1.5rem 0.5rem 1rem; /* Aumentado o padding-right para dar espaço à seta */
-            border-radius: 0.5rem;
-            border: 1px solid #4a5568; /* gray-600 */
-            cursor: pointer;
-            outline: none; /* Remove o outline padrão ao focar */
-            -webkit-appearance: none; /* Remove o estilo padrão do navegador para dropdown */
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23e2e8f0%22%20d%3D%22M287%2069.4L146.6%20209.8c-1.4%201.4-3.4%202.2-5.4%202.2s-4-0.8-5.4-2.2L5%2069.4c-2.8-2.8-2.8-7.2%200-10s7.2-2.8%2010%200L141.2%20188.8l131.8-131.8c2.8-2.8%207.2-2.8%2010%200S289.8%2066.6%20287%2069.4z%22%2F%3E%3C%2Fsvg%3E'); /* Seta customizada */
-            background-repeat: no-repeat;
-            background-position: right 0.7em top 50%, 0 0;
-            background-size: 0.65em auto, 100%;
-        }
-        /* Ajuste para telas pequenas: empilhar e centralizar */
-        @media (max-width: 767px) {
-            .pagination-controls-row {
-                flex-direction: column; /* Empilha os itens */
-                align-items: center; /* Centraliza horizontalmente */
+            .promotion-title-link {
+                font-size: 1.125rem; /* text-lg */
+                font-weight: 600; /* font-semibold */
+                color: #fff; /* Cor do texto branca */
+                text-decoration: none; /* Remove sublinhado padrão */
+                transition: color 0.2s ease-in-out;
             }
-            .pagination-container {
-                margin-bottom: 1rem; /* Espaçamento entre a paginação e o seletor quando empilhados */
-                margin-top: 2rem; /* Espaçamento superior para toda a seção */
+            .promotion-title-link:hover {
+                color: #63b3ed; /* blue-400 */
             }
-            .items-per-page-selector-wrapper {
-                margin-top: 1rem; /* Espaçamento superior para o seletor quando empilhado */
-                margin-left: 0; /* Remove a margem lateral em telas pequenas */
-                width: 100%; /* Ocupa largura total */
-                justify-content: center; /* Centraliza o conteúdo dentro do wrapper */
+            .price-info {
+                display: flex;
+                align-items: center;
+                margin-top: 0.25rem; /* Pequeno espaçamento acima dos preços */
             }
-            .items-per-page-selector {
-                margin-left: 0.5rem; /* Ajusta a margem do seletor em mobile */
+
+            /* Estilo padrão para o layout de grade (duas colunas em telas maiores) */
+            #promotions-list {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr); /* Padrão: 1 coluna em telas pequenas */
+                gap: 1.5rem; /* Espaçamento entre os itens da grade */
             }
-            .items-per-page-label {
-                margin-left: 0; /* Garante que o label também não tenha margem em mobile */
-            }
-        }
-        /* Ajustes para telas maiores para alinhar o seletor à direita */
-        @media (min-width: 768px) {
-            .pagination-controls-row {
-                justify-content: space-between; /* Empurra os elementos para as extremidades */
-            }
-            .items-per-page-selector-wrapper {
-                margin-left: auto; /* Empurra o seletor para a direita */
-            }
-        }
 
-        /* Estilo para o botão "Voltar ao Topo" */
-        #backToTopBtn {
-            display: none; /* Oculto por padrão */
-            position: fixed; /* Fixo na tela */
-            bottom: 20px; /* 20px do fundo */
-            right: 20px; /* 20px da direita */
-            background-color: #63b3ed; /* blue-400 */
-            color: #1a202c; /* Cor escura para o ícone */
-            border: none;
-            border-radius: 9999px; /* Totalmente redondo */
-            padding: 12px; /* Aumenta o padding para um botão maior */
-            font-size: 1.5rem; /* Tamanho da seta */
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: background-color 0.3s ease, opacity 0.3s ease;
-            z-index: 1000; /* Garante que fique acima de outros elementos */
-            opacity: 0.8; /* Levemente transparente */
-        }
-        #backToTopBtn:hover {
-            background-color: #4299e1; /* blue-500 */
-            opacity: 1; /* Totalmente opaco no hover */
-        }
-    </style>
-</head>
-<body class="antialiased">
-    <!-- Cabeçalho do Site -->
-    <header class="bg-gray-900 py-4 shadow-lg">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
-            <!-- Logo/Nome do Site -->
-            <a href="index.html" class="mb-4 md:mb-0">
-                <img src="https://i.ibb.co/Q7QTMNrt/key-f5-symbol-black-computer-260nw-1968799435.webp" alt="Logotipo F5 Games" class="h-12 w-auto rounded-md">
-            </a>
-            <!-- Menu de Navegação -->
-            <nav>
-                <ul class="flex flex-wrap justify-center space-x-6">
-                    <li><a href="index.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Início</a></li>
-                    <li><a href="noticias.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Notícias</a></li>
-                    <li><a href="analises.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Análises</a></li>
-                    <!-- Link "Promoções" agora ativo -->
-                    <li><a href="promocoes.html" class="text-blue-400 text-lg font-semibold transition duration-300">Promoções</a></li>
-                    <li><a href="contato.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Conteúdo da Página de Promoções -->
-    <main class="container mx-auto px-4 py-12 min-h-screen">
-        <section>
-            <h1 class="text-4xl font-bold text-white mb-8 text-center">Promoções Imperdíveis!</h1>
-            <p class="text-gray-300 text-lg mb-10 text-center">
-                Fique por dentro das melhores ofertas e descontos do mundo dos games! Atualizamos esta página regularmente com as promoções mais quentes diretamente da Steam.
-            </p>
-
-            <!-- Botões de Troca de Visualização - Alinhados à direita -->
-            <div class="flex justify-end mb-8 max-w-4xl mx-auto">
-                <div class="view-toggle-container">
-                    <button id="listViewBtn" class="view-toggle-button">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                    <button id="columnViewBtn" class="view-toggle-button active">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h.01M4 10h.01M4 14h.01M4 18h.01M8 6h.01M8 10h.01M8 14h.01M8 18h.01M12 6h.01M12 10h.01M12 14h.01M12 18h.01M16 6h.01M16 10h.01M16 14h.01M16 18h.01M20 6h.01M20 10h.01M20 14h.01M20 18h.01"></path></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Container da Lista de Promoções -->
-            <div id="promotions-list" class="max-w-4xl mx-auto grid">
-                <!-- As promoções serão carregadas aqui pelo JavaScript -->
-                <p id="loading-message" class="col-span-full text-center text-gray-400">Carregando promoções...</p>
-                <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique a URL da função Cloud Functions e sua configuração (CORS).</p>
-            </div>
-
-            <!-- Controles de Paginação e Seletor de Itens por Página -->
-            <div class="flex flex-wrap justify-center md:justify-between items-center mt-8 max-w-4xl mx-auto pagination-controls-row">
-                <!-- Controles de Paginação -->
-                <div id="pagination-controls" class="pagination-container hidden">
-                    <button id="prevPageBtn" class="pagination-button">&lt;</button>
-                    <div id="page-numbers" class="flex gap-2">
-                        <!-- Números das páginas serão inseridos aqui pelo JS -->
-                    </div>
-                    <button id="nextPageBtn" class="pagination-button">&gt;</button>
-                </div>
-                
-                <!-- Seletor de Itens por Página -->
-                <div class="items-per-page-selector-wrapper">
-                    <label for="itemsPerPageSelect" class="text-gray-300 mr-2 items-per-page-label">Itens por página:</label>
-                    <select id="itemsPerPageSelect" class="items-per-page-selector">
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Rodapé do Site -->
-    <footer class="bg-gray-900 py-8 mt-12">
-        <div class="container mx-auto px-4 text-center text-gray-400">
-            <p>&copy; 2025 F5 Games. Todos os direitos reservados.</p>
-            <div class="mt-4 flex justify-center space-x-6">
-                <a href="#" class="hover:text-blue-400 transition duration-300">Política de Privacidade</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="hover:text-blue-400 transition duration-300">Termos de Uso</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Botão Voltar ao Topo -->
-    <button id="backToTopBtn" title="Voltar ao Topo">
-        &#8593; <!-- Seta para cima Unicode -->
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const promotionsList = document.getElementById('promotions-list');
-            const loadingMessage = document.getElementById('loading-message');
-            const errorMessage = document.getElementById('error-message');
-            const columnViewBtn = document.getElementById('columnViewBtn');
-            const listViewBtn = document.getElementById('listViewBtn');
-            const paginationControls = document.getElementById('pagination-controls');
-            const prevPageBtn = document.getElementById('prevPageBtn');
-            const nextPageBtn = document.getElementById('nextPageBtn');
-            const pageNumbersContainer = document.getElementById('page-numbers');
-            const itemsPerPageSelect = document.getElementById('itemsPerPageSelect');
-            const backToTopBtn = document.getElementById('backToTopBtn'); // Novo botão
-
-            let allPromotions = [];
-            let itemsPerPage = parseInt(itemsPerPageSelect.value);
-            let currentPage = 1;
-
-            const jsonFilePath = 'https://southamerica-east1-site-teste-462921.cloudfunctions.net/scrape-steam-promotions-function'; 
-
-            function toggleView(viewType) {
-                if (viewType === 'columns') {
-                    promotionsList.classList.remove('list-view');
-                    promotionsList.classList.add('grid');
-                    columnViewBtn.classList.add('active');
-                    listViewBtn.classList.remove('active');
-                } else {
-                    promotionsList.classList.add('list-view');
-                    promotionsList.classList.remove('grid');
-                    listViewBtn.classList.add('active');
-                    columnViewBtn.classList.remove('active');
+            @media (min-width: 768px) { /* Em telas médias (md) e maiores */
+                #promotions-list {
+                    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
                 }
             }
 
-            function displayPromotions(page) {
-                promotionsList.innerHTML = '';
-                currentPage = page;
+            /* Novo estilo para o layout de lista (uma coluna) */
+            #promotions-list.list-view {
+                display: block; /* Remove o grid */
+                gap: 0; /* Remove o gap da grade */
+            }
+            #promotions-list.list-view .promotion-list-item {
+                margin-bottom: 0.75rem; /* Espaçamento entre os itens na visualização de lista */
+            }
+            #promotions-list.list-view .promotion-list-item:last-child {
+                margin-bottom: 0; /* Remove a margem do último item */
+            }
 
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const promotionsToDisplay = allPromotions.slice(startIndex, endIndex);
 
-                if (promotionsToDisplay.length > 0) {
+            /* Estilos para os botões de visualização */
+            .view-toggle-container {
+                display: flex;
+                border: 2px solid #3498db; /* Borda azul para o container dos botões */
+                border-radius: 9999px; /* rounded-full */
+                overflow: hidden; /* Garante que os botões internos se ajustem à borda */
+                width: fit-content; /* Largura ajustada ao conteúdo */
+            }
+
+            .view-toggle-button {
+                background-color: transparent; /* Começa transparente */
+                color: #e2e8f0; /* Cor do ícone */
+                padding: 0.3rem 0.6rem; /* Padding base */
+                border: none; /* Remove a borda individual dos botões */
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600; /* Para o ícone, se for texto */
+                height: 28px; /* Altura fixa reduzida para 28px */
+                width: 38px; /* Largura fixa reduzida para 38px */
+            }
+            .view-toggle-button svg { /* Ajusta o tamanho do SVG dentro do botão */
+                width: 16px; /* Reduzido para 16px */
+                height: 16px; /* Reduzido para 16px */
+            }
+            .view-toggle-button:hover {
+                background-color: rgba(99, 179, 237, 0.2); /* blue-400 com 20% de opacidade no hover */
+            }
+            .view-toggle-button.active {
+                background-color: #63b3ed; /* blue-400 */
+                color: #1a202c; /* Cor do ícone ativa */
+                /* borda do container ja fa o trabalho da borda */
+            }
+
+            /* Estilos de Paginação */
+            .pagination-container {
+                display: flex;
+                justify-content: center; /* Mantém o alinhamento central dos botões de página */
+                align-items: center;
+                gap: 0.5rem; /* Espaçamento entre os botões de paginação */
+            }
+
+            .pagination-button {
+                background-color: #2d3748; /* bg-gray-700 */
+                color: #e2e8f0; /* text-gray-200 */
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem; /* Cantos arredondados */
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+                font-weight: 600;
+            }
+
+            .pagination-button:hover:not(.active):not(:disabled) {
+                background-color: #4a5568; /* gray-600 */
+            }
+
+            .pagination-button.active {
+                background-color: #63b3ed; /* blue-400 */
+                color: #1a202c; /* text-gray-900 */
+                box-shadow: 0 0 0 2px #63b3ed; /* Borda destacada */
+            }
+
+            .pagination-button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            /* Estilo para o seletor de itens por página e de ordenação */
+            .items-per-page-selector-wrapper, .sort-selector-wrapper {
+                display: flex;
+                align-items: center;
+            }
+            .items-per-page-selector, .sort-selector {
+                background-color: #2d3748; /* bg-gray-700 */
+                color: #e2e8f0; /* text-gray-200 */
+                padding: 0.5rem 1.5rem 0.5rem 1rem; /* Aumentado o padding-right para dar espaço à seta */
+                border-radius: 0.5rem;
+                border: 1px solid #4a5568; /* gray-600 */
+                cursor: pointer;
+                outline: none; /* Remove o outline padrão ao focar */
+                -webkit-appearance: none; /* Remove o estilo padrão do navegador para dropdown */
+                -moz-appearance: none;
+                appearance: none;
+                background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23e2e8f0%22%20d%3D%22M287%2069.4L146.6%20209.8c-1.4%201.4-3.4%202.2-5.4%202.2s-4-0.8-5.4-2.2L5%2069.4c-2.8-2.8-2.8-7.2%200-10s7.2-2.8%2010%200L141.2%20188.8l131.8-131.8c2.8-2.8%207.2-2.8%2010%200S289.8%2066.6%20287%2069.4z%22%2F%3E%3C%2Fsvg%3E'); /* Seta customizada */
+                background-repeat: no-repeat;
+                background-position: right 0.7em top 50%, 0 0;
+                background-size: 0.65em auto, 100%;
+            }
+            /* Ajuste para telas pequenas: empilhar e centralizar */
+            @media (max-width: 767px) {
+                .pagination-controls-row {
+                    flex-direction: column; /* Empilha os itens */
+                    align-items: center; /* Centraliza horizontalmente */
+                }
+                .pagination-container {
+                    margin-bottom: 1rem; /* Espaçamento entre a paginação e o seletor quando empilhados */
+                    margin-top: 2rem; /* Espaçamento superior para toda a seção */
+                }
+                .items-per-page-selector-wrapper, .sort-selector-wrapper {
+                    margin-top: 1rem; /* Espaçamento superior para o seletor quando empilhado */
+                    margin-left: 0; /* Remove a margem lateral em telas pequenas */
+                    width: 100%; /* Ocupa largura total */
+                    justify-content: center; /* Centraliza o conteúdo dentro do wrapper */
+                }
+                .items-per-page-selector, .sort-selector {
+                    margin-left: 0.5rem; /* Ajusta a margem do seletor em mobile */
+                }
+                .items-per-page-label, .sort-label {
+                    margin-left: 0; /* Garante que o label também não tenha margem em mobile */
+                }
+                .search-controls {
+                    flex-direction: column; /* Empilha os itens de busca e ordenação em mobile */
+                    width: 100%;
+                    align-items: stretch; /* Estica os itens para preencher a largura */
+                }
+                .search-controls > div { /* Para os wrappers do input e do sort */
+                    width: 100%;
+                    margin-top: 0.5rem;
+                }
+                .search-input-group { /* Garante que input e botões fiquem juntos */
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+            /* Ajustes para telas maiores para alinhar os elementos de controle */
+            @media (min-width: 768px) {
+                .pagination-controls-row {
+                    justify-content: space-between; /* Empurra os elementos para as extremidades */
+                }
+                /* Alinhe o search-controls com o sort-selector-wrapper dentro dele */
+                .search-controls {
+                    flex-direction: row; /* Volta a ser linha */
+                    justify-content: flex-start; /* Alinhado à esquerda */
+                    align-items: center;
+                    gap: 1.5rem; /* Espaçamento entre o grupo de ordenação e o de busca */
+                }
+                .search-input-group {
+                    flex-direction: row; /* Volta a ser linha */
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+                .sort-selector-wrapper { 
+                    margin-left: 0;
+                    margin-right: 0; 
+                }
+            }
+
+
+            /* Estilo para o botão "Voltar ao Topo" */
+            #backToTopBtn {
+                display: none; /* Oculto por padrão */
+                position: fixed; /* Fixo na tela */
+                bottom: 20px; /* 20px do fundo */
+                right: 20px; /* 20px da direita */
+                background-color: #63b3ed; /* blue-400 */
+                color: #1a202c; /* Cor escura para o ícone */
+                border: none;
+                border-radius: 9999px; /* Totalmente redondo */
+                padding: 12px; /* Aumenta o padding para um botão maior */
+                font-size: 1.5rem; /* Tamanho da seta */
+                cursor: pointer;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                transition: background-color 0.3s ease, opacity 0.3s ease;
+                z-index: 1000; /* Garante que fique acima de outros elementos */
+                opacity: 0.8; /* Levemente transparente */
+            }
+            #backToTopBtn:hover {
+                background-color: #4299e1; /* blue-500 */
+                opacity: 1; /* Totalmente opaco no hover */
+            }
+            /* Estilo para o campo de busca */
+            .search-input-container {
+                position: relative; /* Para posicionar o botão de lupa */
+                display: flex; /* Para alinhar o input e o botão */
+                align-items: center;
+                width: 100%; /* Permite que o container se ajuste */
+                max-width: 300px; /* Largura máxima para desktop */
+                background-color: #2d3748; /* Cor de fundo da caixa de busca */
+                border-radius: 0.5rem; /* Cantos arredondados */
+                border: 1px solid #4a5568; /* Borda da caixa de busca */
+            }
+            .search-input {
+                background-color: transparent; /* Fundo transparente para o input */
+                color: #e2e8f0; /* Cor do texto do input */
+                padding: 0.5rem 1rem;
+                padding-right: 3rem; /* Espaço para o botão da lupa */
+                border: none; /* Remove a borda padrão do input */
+                outline: none;
+                width: 100%; /* Ocupa a largura restante do container */
+            }
+            .search-input:focus {
+                /* Remove a borda do foco no input, a borda principal fica no container */
+                border-color: transparent; 
+            }
+
+            .search-icon-button {
+                position: absolute;
+                right: 0.25rem; /* Ajusta a posição da direita para mais próximo da borda */
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: #63b3ed; /* Cor de fundo do botão da lupa */
+                color: #1a202c; /* Cor da lupa */
+                border: none;
+                border-radius: 0.375rem; /* Cantos arredondados menores para o botão da lupa */
+                padding: 0.3rem 0.6rem; /* Padding para o botão da lupa */
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+                display: flex; /* Para centralizar o SVG */
+                align-items: center;
+                justify-content: center;
+                height: 2.2rem; /* Altura do botão da lupa para alinhar com o input */
+                width: 2.2rem; /* Largura do botão da lupa */
+            }
+            .search-icon-button:hover {
+                background-color: #4299e1; /* Cor mais escura no hover */
+                color: #e2e8f0; /* Cor mais clara da lupa no hover */
+            }
+
+            .search-icon-button svg {
+                width: 1.25rem; /* Tamanho da lupa */
+                height: 1.25rem;
+            }
+
+            .clear-search-button {
+                background-color: #ef4444; /* bg-red-500 */
+                color: #1a202c; /* text-gray-900 */
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out;
+                white-space: nowrap; /* Evita que o texto quebre */
+            }
+            .clear-search-button:hover {
+                background-color: #dc2626; /* red-600 */
+            }
+            .search-controls {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem; /* Espaçamento entre ordenar e grupo de busca */
+                margin-bottom: 1rem; /* Espaço abaixo dos controles de busca */
+            }
+
+            /* Ajustes específicos para o grupo de busca após a mudança */
+            .search-input-group {
+                display: flex; /* Mantém o flexbox para alinhar horizontalmente */
+                align-items: center;
+                gap: 0.5rem; /* Espaçamento entre o container do input e o botão de limpar */
+            }
+            @media (max-width: 767px) {
+                .search-input-container {
+                    max-width: 100%; /* Ocupa largura total em mobile */
+                }
+                .search-input-group {
+                    flex-direction: column; /* Empilha o container do input e o botão de limpar em mobile */
+                    width: 100%;
+                }
+                .search-input-container, .clear-search-button {
+                    width: 100%; /* Ocupa largura total */
+                }
+            }
+        </style>
+    </head>
+    <body class="antialiased">
+        <!-- Cabeçalho do Site -->
+        <header class="bg-gray-900 py-4 shadow-lg">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+                <!-- Logo/Nome do Site -->
+                <a href="index.html" class="mb-4 md:mb-0">
+                    <img src="https://i.ibb.co/Q7QTMNrt/key-f5-symbol-black-computer-260nw-1968799435.webp" alt="Logotipo F5 Games" class="h-12 w-auto rounded-md">
+                </a>
+                <!-- Menu de Navegação -->
+                <nav>
+                    <ul class="flex flex-wrap justify-center space-x-6">
+                        <li><a href="index.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Início</a></li>
+                        <li><a href="noticias.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Notícias</a></li>
+                        <li><a href="analises.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Análises</a></li>
+                        <!-- Link "Promoções" agora ativo -->
+                        <li><a href="promocoes.html" class="text-blue-400 text-lg font-semibold transition duration-300">Promoções</a></li>
+                        <li><a href="contato.html" class="text-gray-300 hover:text-blue-400 text-lg font-semibold transition duration-300">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Conteúdo da Página de Promoções -->
+        <main class="container mx-auto px-4 py-12 min-h-screen">
+            <section>
+                <h1 class="text-4xl font-bold text-white mb-8 text-center">Promoções Imperdíveis!</h1>
+                <p class="text-gray-300 text-lg mb-10 text-center">
+                    Fique por dentro das melhores ofertas e descontos do mundo dos games! Atualizamos esta página regularmente com as promoções mais quentes diretamente da Steam.
+                </p>
+
+                <!-- Botões de Troca de Visualização - Alinhados à direita -->
+                <div class="flex justify-end mb-4 max-w-4xl mx-auto">
+                    <div class="view-toggle-container">
+                        <button id="listViewBtn" class="view-toggle-button">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </button>
+                        <button id="columnViewBtn" class="view-toggle-button active">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h.01M4 10h.01M4 14h.01M4 18h.01M8 6h.01M8 10h.01M8 14h.01M8 18h.01M12 6h.01M12 10h.01M12 14h.01M12 18h.01M16 6h.01M16 10h.01M16 14h.01M16 18h.01M20 6h.01M20 10h.01M20 14h.01M20 18h.01"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controles de Ordenação e Busca Juntos -->
+                <div class="search-controls max-w-4xl mx-auto flex items-center md:justify-start mb-8">
+                    <!-- Seletor de Ordenação -->
+                    <div class="sort-selector-wrapper">
+                        <label for="sortSelect" class="text-gray-300 mr-2 sort-label">Ordenar por:</label>
+                        <select id="sortSelect" class="sort-selector">
+                            <option value="name-asc">Nome (A-Z)</option>
+                            <option value="name-desc">Nome (Z-A)</option>
+                            <option value="price-asc">Preço (Menor ao Maior)</option>
+                            <option value="price-desc">Preço (Maior ao Menor)</option>
+                        </select>
+                    </div>
+
+                    <!-- Grupo do Input de Busca e Botões -->
+                    <div class="search-input-group flex items-center gap-2">
+                        <div class="search-input-container">
+                            <input type="text" id="searchInput" placeholder="Buscar jogo..." class="search-input">
+                            <button id="searchIconButton" class="search-icon-button" aria-label="Buscar">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </button>
+                        </div>
+                        <button id="clearSearchButton" class="clear-search-button">Limpar Filtro</button>
+                    </div>
+                </div>
+
+                <!-- Container da Lista de Promoções -->
+                <div id="promotions-list" class="max-w-4xl mx-auto grid">
+                    <!-- As promoções serão carregadas aqui pelo JavaScript -->
+                    <p id="loading-message" class="col-span-full text-center text-gray-400">Carregando promoções...</p>
+                    <p id="error-message" class="col-span-full text-center text-red-500 hidden">Erro ao carregar promoções. Por favor, verifique a URL da função Cloud Functions e sua configuração (CORS).</p>
+                    <p id="no-results-message" class="col-span-full text-center text-gray-400 hidden">Nenhum jogo encontrado com o termo de busca.</p>
+                </div>
+
+                <!-- Controles de Paginação e Itens por Página (mantidos separados para layout) -->
+                <div class="flex flex-wrap justify-center md:justify-between items-center mt-8 max-w-4xl mx-auto pagination-controls-row">
+                    <!-- Controles de Paginação -->
+                    <div id="pagination-controls" class="pagination-container hidden">
+                        <button id="prevPageBtn" class="pagination-button">&lt;</button>
+                        <div id="page-numbers" class="flex gap-2">
+                            <!-- Números das páginas serão inseridos aqui pelo JS -->
+                        </div>
+                        <button id="nextPageBtn" class="pagination-button">&gt;</button>
+                    </div>
+                    
+                    <!-- Seletor de Itens por Página -->
+                    <div class="items-per-page-selector-wrapper ml-auto md:ml-0">
+                        <label for="itemsPerPageSelect" class="text-gray-300 mr-2 items-per-page-label">Itens por página:</label>
+                        <select id="itemsPerPageSelect" class="items-per-page-selector">
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Rodapé do Site -->
+        <footer class="bg-gray-900 py-8 mt-12">
+            <div class="container mx-auto px-4 text-center text-gray-400">
+                <p>&copy; 2025 F5 Games. Todos os direitos reservados.</p>
+                <div class="mt-4 flex justify-center space-x-6">
+                    <a href="#" class="hover:text-blue-400 transition duration-300">Política de Privacidade</a>
+                    <span class="text-gray-600">|</span>
+                    <a href="#" class="hover:text-blue-400 transition duration-300">Termos de Uso</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Botão Voltar ao Topo -->
+        <button id="backToTopBtn" title="Voltar ao Topo">
+            &#8593; <!-- Seta para cima Unicode -->
+        </button>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const promotionsList = document.getElementById('promotions-list');
+                const loadingMessage = document.getElementById('loading-message');
+                const errorMessage = document.getElementById('error-message');
+                const noResultsMessage = document.getElementById('no-results-message');
+                const columnViewBtn = document.getElementById('columnViewBtn');
+                const listViewBtn = document.getElementById('listViewBtn');
+                const paginationControls = document.getElementById('pagination-controls');
+                const prevPageBtn = document.getElementById('prevPageBtn');
+                const nextPageBtn = document.getElementById('nextPageBtn');
+                const pageNumbersContainer = document.getElementById('page-numbers');
+                const itemsPerPageSelect = document.getElementById('itemsPerPageSelect');
+                const backToTopBtn = document.getElementById('backToTopBtn');
+                const searchInput = document.getElementById('searchInput');
+                const searchIconButton = document.getElementById('searchIconButton'); // Referência ao NOVO botão de lupa
+                const clearSearchButton = document.getElementById('clearSearchButton');
+                const sortSelect = document.getElementById('sortSelect');
+
+                let allPromotions = [];
+                let filteredPromotions = [];
+                let itemsPerPage = parseInt(itemsPerPageSelect.value);
+                let currentPage = 1;
+                let currentSortOption = sortSelect.value;
+
+                const jsonFilePath = 'https://southamerica-east1-site-teste-462921.cloudfunctions.net/scrape-steam-promotions-function'; 
+
+                function toggleView(viewType) {
+                    if (viewType === 'columns') {
+                        promotionsList.classList.remove('list-view');
+                        promotionsList.classList.add('grid');
+                        columnViewBtn.classList.add('active');
+                        listViewBtn.classList.remove('active');
+                    } else {
+                        promotionsList.classList.add('list-view');
+                        promotionsList.classList.remove('grid');
+                        listViewBtn.classList.add('active');
+                        columnViewBtn.classList.remove('active');
+                    }
+                }
+
+                function displayPromotions(page) {
+                    promotionsList.innerHTML = '';
+                    noResultsMessage.classList.add('hidden');
+                    currentPage = page;
+
+                    let promotionsToPaginate = filteredPromotions.length > 0 || searchInput.value.trim() !== '' ? filteredPromotions : [...allPromotions];
+
+                    // Aplica a ordenação antes da paginação
+                    promotionsToPaginate = sortPromotions(promotionsToPaginate, currentSortOption);
+
+                    if (promotionsToPaginate.length === 0) {
+                        if (searchInput.value.trim() !== '') {
+                            noResultsMessage.classList.remove('hidden');
+                        } else {
+                            promotionsList.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada para esta página.</p>';
+                        }
+                        paginationControls.classList.add('hidden');
+                        return;
+                    }
+
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    const promotionsToDisplay = promotionsToPaginate.slice(startIndex, endIndex);
+
                     promotionsToDisplay.forEach(promo => {
                         const listItem = document.createElement('div');
                         listItem.className = "promotion-list-item";
@@ -432,138 +582,224 @@
                         promotionsList.appendChild(listItem);
                     });
                     renderPaginationControls();
-                } else {
-                    promotionsList.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada para esta página.</p>';
-                    paginationControls.classList.add('hidden');
-                }
-            }
-
-            function renderPaginationControls() {
-                pageNumbersContainer.innerHTML = '';
-                const totalPages = Math.ceil(allPromotions.length / itemsPerPage);
-
-                if (totalPages > 1) {
-                    paginationControls.classList.remove('hidden'); 
-                } else {
-                    paginationControls.classList.add('hidden');
                 }
 
-                prevPageBtn.disabled = currentPage === 1;
-                nextPageBtn.disabled = currentPage === totalPages;
+                function sortPromotions(promotionsArray, sortBy) {
+                    const sortedArray = [...promotionsArray];
 
-                const maxPageButtons = 5;
-                let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-                let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+                    switch (sortBy) {
+                        case 'name-asc':
+                            return sortedArray.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+                        case 'name-desc':
+                            return sortedArray.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
+                        case 'price-asc':
+                            return sortedArray.sort((a, b) => {
+                                const priceA_raw = (a.final_price || '0').replace('R$', '').replace(',', '.').trim();
+                                const priceB_raw = (b.final_price || '0').replace('R$', '').replace(',', '.').trim();
+                                
+                                const priceA_parsed = parseFloat(priceA_raw);
+                                const priceB_parsed = parseFloat(priceB_raw);
 
-                if (endPage - startPage + 1 < maxPageButtons) {
-                    startPage = Math.max(1, endPage - maxPageButtons + 1);
-                }
+                                const finalPriceA = isNaN(priceA_parsed) || (a.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceA_parsed;
+                                const finalPriceB = isNaN(priceB_parsed) || (b.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceB_parsed;
+                                
+                                return finalPriceA - finalPriceB;
+                            });
+                        case 'price-desc':
+                            return sortedArray.sort((a, b) => {
+                                const priceA_raw = (a.final_price || '0').replace('R$', '').replace(',', '.').trim();
+                                const priceB_raw = (b.final_price || '0').replace('R$', '').replace(',', '.').trim();
+                                
+                                const priceA_parsed = parseFloat(priceA_raw);
+                                const priceB_parsed = parseFloat(priceB_raw);
 
-                if (startPage > 1) {
-                    addPageButton(1);
-                    if (startPage > 2) {
-                        addEllipsis();
+                                const finalPriceA = isNaN(priceA_parsed) || (a.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceA_parsed;
+                                const finalPriceB = isNaN(priceB_parsed) || (b.final_price || '').toLowerCase().includes('gratuito') ? 0 : priceB_parsed;
+
+                                // DEBUG: Adiciona console.log para ver os valores comparados
+                                console.log(`Comparando Preços (Maior ao Menor): ${a.title} (R$${finalPriceA}) vs ${b.title} (R$${finalPriceB}) -> Resultado: ${finalPriceB - finalPriceA}`);
+
+                                // A lógica para "Maior ao Menor" é subtrair B de A
+                                return finalPriceB - finalPriceA;
+                            });
+                        default:
+                            return sortedArray;
                     }
                 }
 
-                for (let i = startPage; i <= endPage; i++) {
-                    addPageButton(i);
-                }
 
-                if (endPage < totalPages) {
-                    if (endPage < totalPages - 1) {
-                        addEllipsis();
-                    }
-                    addPageButton(totalPages);
-                }
+                function renderPaginationControls() {
+                    pageNumbersContainer.innerHTML = '';
+                    const promotionsCount = filteredPromotions.length > 0 || searchInput.value.trim() !== '' ? filteredPromotions.length : allPromotions.length;
+                    const totalPages = Math.ceil(promotionsCount / itemsPerPage);
 
-                function addPageButton(pageNumber) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = pageNumber;
-                    pageButton.classList.add('pagination-button');
-                    if (pageNumber === currentPage) {
-                        pageButton.classList.add('active');
-                    }
-                    pageButton.addEventListener('click', () => displayPromotions(pageNumber));
-                    pageNumbersContainer.appendChild(pageButton);
-                }
-
-                function addEllipsis() {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.textContent = '...';
-                    ellipsis.classList.add('pagination-button');
-                    ellipsis.style.cursor = 'default';
-                    ellipsis.style.backgroundColor = 'transparent';
-                    ellipsis.style.boxShadow = 'none';
-                    ellipsis.style.color = '#9ca3af';
-                    pageNumbersContainer.appendChild(ellipsis);
-                }
-            }
-
-            prevPageBtn.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    displayPromotions(currentPage - 1);
-                }
-            });
-
-            nextPageBtn.addEventListener('click', () => {
-                const totalPages = Math.ceil(allPromotions.length / itemsPerPage);
-                if (currentPage < totalPages) {
-                    displayPromotions(currentPage + 1);
-                }
-            });
-
-            itemsPerPageSelect.addEventListener('change', () => {
-                itemsPerPage = parseInt(itemsPerPageSelect.value);
-                currentPage = 1;
-                displayPromotions(currentPage);
-            });
-
-            fetch(jsonFilePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status} - Verifique a URL da função Cloud Functions.`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    loadingMessage.classList.add('hidden');
-                    if (data && data.promotions && data.promotions.length > 0) {
-                        allPromotions = data.promotions;
-                        displayPromotions(1);
-                        toggleView('columns');
+                    if (totalPages > 1) {
+                        paginationControls.classList.remove('hidden'); 
                     } else {
-                        promotionsList.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada na URL da função Cloud Functions ou o resultado está vazio/inválido.</p>';
                         paginationControls.classList.add('hidden');
                     }
-                })
-                .catch(error => {
-                    loadingMessage.classList.add('hidden');
-                    errorMessage.classList.remove('hidden');
-                    console.error('Erro ao carregar ou processar o JSON de promoções:', error);
-                    paginationControls.classList.add('hidden');
-                });
 
-            columnViewBtn.addEventListener('click', () => toggleView('columns'));
-            listViewBtn.addEventListener('click', () => toggleView('list'));
+                    prevPageBtn.disabled = currentPage === 1;
+                    nextPageBtn.disabled = currentPage === totalPages;
 
-            // Lógica do botão "Voltar ao Topo"
-            window.addEventListener('scroll', () => {
-                // Mostra o botão quando o usuário rola 200px para baixo
-                if (window.scrollY > 200) {
-                    backToTopBtn.style.display = 'block';
-                } else {
-                    backToTopBtn.style.display = 'none';
+                    const maxPageButtons = 5;
+                    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+                    let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+                    if (endPage - startPage + 1 < maxPageButtons) {
+                        startPage = Math.max(1, endPage - maxPageButtons + 1);
+                    }
+
+                    if (startPage > 1) {
+                        addPageButton(1);
+                        if (startPage > 2) {
+                            addEllipsis();
+                        }
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        addPageButton(i);
+                    }
+
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) {
+                            addEllipsis();
+                        }
+                        addPageButton(totalPages);
+                    }
+
+                    function addPageButton(pageNumber) {
+                        const pageButton = document.createElement('button');
+                        pageButton.textContent = pageNumber;
+                        pageButton.classList.add('pagination-button');
+                        if (pageNumber === currentPage) {
+                            pageButton.classList.add('active');
+                        }
+                        pageButton.addEventListener('click', () => displayPromotions(pageNumber));
+                        pageNumbersContainer.appendChild(pageButton);
+                    }
+
+                    function addEllipsis() {
+                        const ellipsis = document.createElement('span');
+                        ellipsis.textContent = '...';
+                        ellipsis.classList.add('pagination-button');
+                        ellipsis.style.cursor = 'default';
+                        ellipsis.style.backgroundColor = 'transparent';
+                        ellipsis.style.boxShadow = 'none';
+                        ellipsis.style.color = '#9ca3af';
+                        pageNumbersContainer.appendChild(ellipsis);
+                    }
                 }
-            });
 
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth' // Rola suavemente
+                function applySearchFilter() {
+                    const searchTerm = searchInput.value.trim().toLowerCase();
+                    if (searchTerm === '') {
+                        filteredPromotions = [];
+                    } else {
+                        filteredPromotions = allPromotions.filter(promo => 
+                            (promo.title || '').toLowerCase().includes(searchTerm)
+                        );
+                    }
+                    currentPage = 1;
+                    displayPromotions(currentPage);
+                }
+
+                function clearSearchFilter() {
+                    searchInput.value = ''; // Limpa o campo de busca
+                    filteredPromotions = []; // Zera as promoções filtradas
+                    currentPage = 1; // Volta para a primeira página
+
+                    sortSelect.value = 'name-asc'; // Define a ordenação de volta para o padrão (Nome A-Z)
+                    currentSortOption = 'name-asc'; // Atualiza a variável de controle da ordenação
+                    
+                    displayPromotions(currentPage); // Exibe todas as promoções com a ordenação padrão
+                }
+
+                prevPageBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        displayPromotions(currentPage - 1);
+                    }
+                });
+
+                nextPageBtn.addEventListener('click', () => {
+                    const promotionsCount = filteredPromotions.length > 0 || searchInput.value.trim() !== '' ? filteredPromotions.length : allPromotions.length;
+                    const totalPages = Math.ceil(promotionsCount / itemsPerPage);
+                    if (currentPage < totalPages) {
+                        displayPromotions(currentPage + 1);
+                    }
+                });
+
+                itemsPerPageSelect.addEventListener('change', () => {
+                    itemsPerPage = parseInt(itemsPerPageSelect.value);
+                    currentPage = 1;
+                    displayPromotions(currentPage);
+                });
+
+                sortSelect.addEventListener('change', () => {
+                    currentSortOption = sortSelect.value;
+                    currentPage = 1;
+                    displayPromotions(currentPage);
+                });
+
+                // Altera o evento de clique para o NOVO botão de lupa
+                searchIconButton.addEventListener('click', applySearchFilter);
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        applySearchFilter();
+                    }
+                });
+                searchInput.addEventListener('input', () => {
+                    if (searchInput.value.trim() === '') {
+                        clearSearchFilter(); 
+                    }
+                });
+                
+                clearSearchButton.addEventListener('click', clearSearchFilter);
+
+                fetch(jsonFilePath)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status} - Verifique a URL da função Cloud Functions e sua configuração (CORS).`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        loadingMessage.classList.add('hidden'); // Oculta a mensagem de carregamento
+                        if (data && data.promotions && data.promotions.length > 0) {
+                            allPromotions = data.promotions;
+                            filteredPromotions = [...allPromotions];
+                            displayPromotions(1);
+                            toggleView('columns');
+                        } else {
+                            promotionsList.innerHTML = '<p class="col-span-full text-center text-gray-400">Nenhuma promoção encontrada na URL da função Cloud Functions ou o resultado está vazio/inválido.</p>';
+                            paginationControls.classList.add('hidden');
+                        }
+                    })
+                    .catch(error => {
+                        loadingMessage.classList.add('hidden');
+                        errorMessage.classList.remove('hidden'); // Exibe a mensagem de erro
+                        console.error('Erro ao carregar ou processar o JSON de promoções:', error);
+                    });
+
+                columnViewBtn.addEventListener('click', () => toggleView('columns'));
+                listViewBtn.addEventListener('click', () => toggleView('list'));
+
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 200) {
+                        backToTopBtn.style.display = 'block';
+                    } else {
+                        backToTopBtn.style.display = 'none';
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 });
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
+    
